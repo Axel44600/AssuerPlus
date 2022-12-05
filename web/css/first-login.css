@@ -1,0 +1,112 @@
+.one_box .bg1 {
+    width: 100%; 
+    min-height: 60vh;
+    background-image: url(/web/img/banniere.png);
+    background-size: cover;
+}
+
+.forgot-pass {
+    width: 100%; 
+    padding-top: 100px;
+}
+    .pass {
+        background-color: #FFF; 
+        width: 500px; 
+        border-radius: 10px; 
+        height: auto; 
+        text-align: center;
+    }
+
+        .pass h1 {
+            font-weight: lighter;
+            background-color: #5e992b; 
+            line-height: 55px; 
+            height: 60px; 
+            color: #FFF; 
+            border-radius: 10px 10px 0px 0px;
+        }
+
+        .pass .form {
+            margin-left: auto; 
+            margin-top: 20px; 
+            text-align: left; 
+            width: 80%;
+        }
+
+        .pass a.answer {
+            background-color: #5e992b; 
+            color: #FFF; 
+            display: inline-block;
+            height: 32px; 
+            line-height: 30px; 
+            margin: 5px 0px 5px 0px;
+            text-decoration: none; 
+            width: 45%; 
+            text-align: center; 
+            border-radius: 4px;
+        }
+
+        .pass input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+            margin: 5px 0px 5px 0px; 
+            height: 32px; 
+            width: 90%;
+        }
+
+        .pass input[type="submit"] {
+            transition-duration: 1s;
+            font-weight: bold; 
+            font-size: 16px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            border: none; 
+            height: 32px; 
+            background-color: #1E1E1E; 
+            color: #FFF; 
+            border-radius: 4px; 
+            margin: 5px 0px 20px 0px; 
+            width: 92%;
+        }
+
+        .pass input[type="submit"]:hover {
+            transition-duration: 1s;
+            font-weight: bold; 
+            font-size: 16px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            border: none; 
+            height: 32px; 
+            background-color: #5e992b; 
+            color: #FFF; 
+            border-radius: 4px; 
+            margin: 5px 0px 20px 0px; 
+            width: 92%;
+        }
+
+@media only screen and (max-width: 425px) 
+{    
+    .one_box .bg1 {
+        width: 100%; 
+        min-height: 35vh;
+        background-image: url(/web/img/banniere.png);
+        background-size: cover;
+    }
+
+    .forgot-pass {
+        padding-top: 50px;
+    }
+
+    .pass {
+        background-color: #FFF; 
+        width: 80%; 
+        border-radius: 10px; 
+        height: auto; 
+        text-align: center;
+    }
+
+        .pass h1 {
+            font-size: 20px;
+        }
+
+}

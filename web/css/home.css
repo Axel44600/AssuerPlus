@@ -1,0 +1,193 @@
+.right {
+    width: 650px; 
+    text-align: center;
+}
+
+    .right h1 {
+        color: #FFF; 
+        text-transform: uppercase;
+    }
+
+    .right p {
+        font-size: 20px;
+    }
+
+    .right ul {
+        display: flex; 
+        flex-wrap: wrap; 
+        padding: 0; 
+        margin: 10px;
+    }
+
+        ul .bc1 {
+            border-radius: 4px 0px 0px 4px; 
+            width: 33.3%; 
+            border-top: 2px solid #5e992b; 
+            height: 30px; 
+            background-color: #5e992b;
+        }
+
+        ul .bc2 {
+            width: 33.3%; 
+            transition-duration: 1s;
+            color: #FFF; 
+            line-height: 28px; 
+            border-top: 1px solid #5e992b; 
+            border-bottom: 1px solid #5e992b; 
+            height: 30px;
+            cursor: pointer;
+        }
+
+        ul .bc2:hover {
+            width: 33.3%; 
+            transition-duration: 1s;
+            color: #FFF; 
+            line-height: 28px; 
+            background-color: #5e992b;
+            border-top: 1px solid #5e992b; 
+            border-bottom: 1px solid #5e992b; 
+            height: 30px;
+            cursor: pointer;
+        }
+
+        ul .bc3 {
+            border-radius: 0px 4px 4px 0px; 
+            width: 33.3%; 
+            border-top: 2px solid #5e992b; 
+            height: 30px; 
+            background-color: #5e992b;
+        }
+
+section {
+    width: 100%;
+    background-color: grey;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+    section .title {
+        text-transform: uppercase;
+        display: block;
+        width: 100%;
+        height: 50px;
+        background-color: #FFF;
+        color: #1E1E1E;
+        line-height: 48px;
+        font-size: 30px;
+        text-align: center;
+    }
+
+    section .messagerie {
+        margin: 0; 
+        width: 800px; 
+        height: 300px; 
+        background-color: #1E1E1E;
+    }
+
+        .messagerie .contain {
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            flex-direction: column; 
+            align-content: stretch;
+            margin-bottom: 40px;
+        }
+
+            .contain .msg {
+                background-color: #FFF; 
+                width: 300px;
+                border-radius: 10px; 
+                padding: 10px; 
+                float: left; 
+                margin: 10px;
+            }
+
+            .contain .answer {
+                margin-right: 10px; 
+                background-color: #5e992b; 
+                color: #FFF;;
+                border-radius: 10px; padding: 10px;
+            }
+
+        .messagerie form {
+            text-align: left; 
+            padding-left: 4px; 
+            background-color: #1E1E1E; 
+            width: 100%; 
+            line-height: 45px; 
+            height: 50px;
+        }
+
+        .messagerie input[type="text"] {
+            width: 80%; 
+            height: 30px; 
+            border-radius: 4px; 
+            border: 1px solid #FFF;
+        }
+
+        .messagerie input[type="submit"] {
+            cursor: pointer; 
+            background-color: #1E1E1E; 
+            color: #FFF; 
+            border: 1px solid #FFF;
+            border-radius: 4px; 
+            height: 35px; 
+            width: 15%; 
+            font-weight: bold;
+        }
+
+    section .contrats {
+        margin: 0; 
+        width: 800px; 
+        height: 300px; 
+        background-color: #FFF;
+    }
+
+        section .contrats .title {
+            background-color: #1E1E1E;
+            border-top: 2px solid #FFF;
+            color: #FFF;
+        }
+
+
+    section .sinistre {
+            margin: 0; 
+            width: 800px; 
+            height: 300px; 
+            background-color: #FFF;
+    }
+
+    section .picture {
+        margin: 0; 
+        width: 800px; 
+        height: 300px; 
+        background-color: #FFF;
+    }
+
+        .picture .picture_accident {
+            width: 100%; 
+            background-size: cover; 
+            height: 300px; 
+            background-image: url(/web/img/picture-accident.png);
+        }
+
+
+
+
+
+
+
+@media only screen and (max-width: 425px) 
+{ 
+    ul .bc1, .bc3 {
+        display: none;
+    }
+
+    ul .bc2 {
+        width: 80%;
+        background-color: #1E1E1E;
+    }
+
+}

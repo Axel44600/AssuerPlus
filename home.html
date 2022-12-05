@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/web/img/favicon_car.png"/>
+    <link rel="apple-touch-icon" href="/web/img/favicon_car.png"/>
+    <link rel="stylesheet" href="/web/css/style.css">
+    <link rel="stylesheet" href="/web/css/home.css">
+    <link rel="stylesheet" href="/web/css/header.css">
+    <title>Mon espace personnel - AssuerPlus</title>
+</head>
+<body>
+
+<header class="head" style="max-height: 800px;">
+    <div class="head-left" style="margin-bottom: 15px;">
+        <span class="logo">AssuerPlus</span>
+        <div class="slogan">Le spécialiste de l'assurance auto depuis 20 ans !</div>
+    </div>
+
+
+    <div class="right">
+        <h1><b>Gaudin Axel : </b><br> <p>mon espace personnel</p></h1>
+        <ul>
+           <div class="bc1"></div>
+           <div onclick="window.location.href = '#'" class="bc2">Se déconnecter</div>
+           <div class="bc3"></div>
+        </ul>
+    </div>
+</header>
+
+<section id="one">
+    <div class="messagerie">
+        <span class="title">Messagerie</span>
+
+        <div class="contain" style="overflow-y: scroll;">
+            <div class="msg">
+                <u><b>Assistant AssuerPlus :</b></u><br>
+                <p>N'hésitez pas à me contacter en cas de problèmes, je suis à votre service !</p>
+            </div>
+
+            <div class="answer">
+                <u><b>Moi :</b></u>
+                <p>Merci à vous pour votre disponibilité.</p>
+            </div>
+        </div>
+        <form action="#">
+            <input type="text" placeholder="Votre message" required>
+            <input type="submit" value="Envoyer">
+        </form>
+    </div>
+
+    
+    <div class="contrats">
+        <span class="title">Mes contrats</span>
+        <div style="padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; flex-direction: column; align-content: stretch;">
+            
+            <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
+            <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
+            <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
+        </div>
+    </div>
+</section>
+
+<section id="two">
+    <div class="sinistre" style="background-color: #FFF;">
+        <span class="title" style="background-color: #1E1E1E; color: #FFF; border-top: 2px solid #FFF;">Déclarer un sinistre</span>
+    
+        <form action="#" method="post">
+            <label for="immac">N° d'immatriculation</label>
+            <input type="text" id="immac" name="immac" required>
+
+            <label for="localisation">Localisation de l'accident</label>
+            <input type="text" id="localisation" name="localisation" required><br>
+
+            <label for="about">Décrivez le sinistre en détails</label><br>
+            <textarea name="" id="" cols="30" rows="10" required></textarea>
+
+            <p>Veuillez nous envoyer les documents suivants : photos de l'accident; pièce d'identité...</p>
+            <input type="file" multiple required>
+            <input type="submit" value="Déclarer mon sinistre">
+        </form>
+
+    </div>
+
+
+    <div class="picture">
+        <span class="title" style="background-color: #1E1E1E; color: #FFF; border-top: 2px solid #FFF;"></span>
+        <div class="picture_accident"></div>
+    </div>
+</section>
+
+<section id="three">
+    <div class="messagerie">
+        <span class="title">Mes sinistres</span>
+    </div>
+    <div class="contrats">
+        <span class="title">Actualités</span>
+    </div>
+</section>
+
+<section id="four">
+    <div class="messagerie">
+        <span class="title">Mes coordonnées</span>
+    </div>
+    <div class="contrats">
+    </div>
+</section>
+
+<footer>
+    <p>© 2022 - <b>AssuerPlus</b>, Tous droits réservés</p>
+</footer>
+    
+</body>
+</html>

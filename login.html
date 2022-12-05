@@ -8,8 +8,9 @@
     <link rel="apple-touch-icon" href="/web/img/favicon_car.png"/>
     <link rel="stylesheet" href="/web/css/style.css">
     <link rel="stylesheet" href="/web/css/index.css">
+    <link rel="stylesheet" href="/web/css/login.css">
     <link rel="stylesheet" href="/web/css/header.css">
-    <title>AssuerPlus – Assurance auto</title>
+    <title>Connexion - AssuerPlus</title>
     <script>
         function myFunction() {
             document.getElementById("check").checked = false;
@@ -34,9 +35,9 @@
         </div>
                 
         <ul class="menu-items">
-            <li style="border: none;"><a onclick="myFunction()" href="#about">Le groupe AssuerPlus</a></li>
-            <li><a onclick="myFunction()" href="#map">Nos agences</a></li>
-            <li><a onclick="myFunction()" href="#help">Assistance</a></li>
+            <li style="border: none;"><a onclick="myFunction()" href="index.html">Le groupe AssuerPlus</a></li>
+            <li><a onclick="myFunction()" href="#">Nos agences</a></li>
+            <li><a onclick="myFunction()" href="#">Assistance</a></li>
             <li><a onclick="myFunction()" href="login.html">Mon espace personnel</a></li>
         </ul>
 
@@ -45,28 +46,27 @@
 
 
 <section class="one_box">
-    <div class="bg"></div>
-        <div class="option">
-            <div class="opt">
-                <div class="icon-voiture"></div>
-                <h1>Auto</h1>
-                <a href="#">Obtenir mon tarif</a>
-            </div>
-            <div class="opt">
-                <div class="icon-sinistre"></div>
-                <h1>Sinistre</h1>
-                <a href="#">Déclarer un sinistre</a>
-            </div>
-            <div class="opt">
-                <div class="icon-assurance"></div>
-                <h1>Assurances</h1>
-                <a href="#">Découvrir</a>
-            </div>
+    <div class="bg1">
+    <div class="login">
+        <div class="login-form">
+            <h1>Accéder à mon espace personnel Assurances</h1>
+
+            <form action="#" method="post">
+            <label for="mail">N° de souscripteur / email</label><br>
+            <input type="text" placeholder="ex: 56444392829..." name="nOrMail" id="mail" required><br>
+            <label for="password">Mot de passe</label><br>
+            <input type="text" placeholder="******" type="password" id="password" name="password" required><br>
+            <small><a href="first-login.html">1ère connexion / Mot de passe oublié ?</a></small>
+            <input type="submit" value="Se connecter">
+            </form>
+
         </div>
+    </div>
+    </div>
 </section>
 
 
-<section class="two_box" id="about">
+<section class="two_box">
     <h1>AssuerPlus, votre complice de vies</h1>
     <hr>
     <br>
@@ -75,14 +75,14 @@
     </span>   
 </section>
 
-<section class="two_box" id="map">
+<section class="two_box">
         <h1>Nos agences</h1>
             <hr>
             <br>
         <div class="map"></div>
 </section>
 
-<section class="two_box" id="help" style="display: flex; flex-wrap: wrap;">
+<section class="two_box" style="display: flex; flex-wrap: wrap;">
     <div class="help">
             <div class="help-contact">
                 <h1>Assistance</h1>

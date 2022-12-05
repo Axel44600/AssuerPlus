@@ -1,7 +1,3 @@
-header {
-    
-}
-
 header.head {
     background-color: #1E1E1E; 
     display: flex; 
@@ -38,10 +34,6 @@ header.head {
 
 .head .head-right {
     width: 1000px;
-}
-
-.head .head-right nav {
-
 }
 
 .head .head-right li {
@@ -123,7 +115,7 @@ header.head {
       display: none;
       width: 300px;
       height: auto;
-      background-color: #5e992b;
+      background-color: #1e1e1e;
       color: #FFF;
       top: 130px;
       position: absolute;

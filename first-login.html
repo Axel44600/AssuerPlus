@@ -8,8 +8,10 @@
     <link rel="apple-touch-icon" href="/web/img/favicon_car.png"/>
     <link rel="stylesheet" href="/web/css/style.css">
     <link rel="stylesheet" href="/web/css/index.css">
+    <link rel="stylesheet" href="/web/css/first-login.css">
     <link rel="stylesheet" href="/web/css/header.css">
-    <title>AssuerPlus – Assurance auto</title>
+    <title>Première connexion - AssuerPlus</title>
+    <script src="/web/js/login.js"></script>
     <script>
         function myFunction() {
             document.getElementById("check").checked = false;
@@ -34,9 +36,9 @@
         </div>
                 
         <ul class="menu-items">
-            <li style="border: none;"><a onclick="myFunction()" href="#about">Le groupe AssuerPlus</a></li>
-            <li><a onclick="myFunction()" href="#map">Nos agences</a></li>
-            <li><a onclick="myFunction()" href="#help">Assistance</a></li>
+            <li style="border: none;"><a onclick="myFunction()" href="index.html">Le groupe AssuerPlus</a></li>
+            <li><a onclick="myFunction()" href="#">Nos agences</a></li>
+            <li><a onclick="myFunction()" href="#">Assistance</a></li>
             <li><a onclick="myFunction()" href="login.html">Mon espace personnel</a></li>
         </ul>
 
@@ -45,28 +47,57 @@
 
 
 <section class="one_box">
-    <div class="bg"></div>
-        <div class="option">
-            <div class="opt">
-                <div class="icon-voiture"></div>
-                <h1>Auto</h1>
-                <a href="#">Obtenir mon tarif</a>
+    <div class="bg1">
+    <div class="forgot-pass">
+        <div class="pass">
+            <h1>Demande de mot de passe</h1>
+
+            <div class="form">
+            <label for="">Vous êtes assuré au près du groupe AssuerPlus</label><br>
+            <a onclick="newPass()" class="answer" id="yes" href="#">Oui</a>
+            <a onclick="newUser()" href="#" class="answer" id="no" style="background-color: #fff; color: #1E1E1E; border: 1px solid #1E1E1E;">Non</a>
+
+            <div class="first-contain">
+                <form action="#" method="post">
+                    <label for="numS">Votre numéro de souscripteur</label><br>
+                    <input type="text" name="nOrMail" id="numS" required><br>
+                    <label for="mail">Votre email</label><br>
+                    <input type="email" id="mail" name="mail" required><br>
+                    <input type="submit" value="Valider">
+                </form>
             </div>
-            <div class="opt">
-                <div class="icon-sinistre"></div>
-                <h1>Sinistre</h1>
-                <a href="#">Déclarer un sinistre</a>
-            </div>
-            <div class="opt">
-                <div class="icon-assurance"></div>
-                <h1>Assurances</h1>
-                <a href="#">Découvrir</a>
+
+            <div class="second-contain" style="display: none;">
+                <form action="#" method="post">
+                    <label for="mail">Votre email</label><br>
+                    <input type="email" name="mail" id="mail" required><br>
+                    <label for="first-name">Nom</label>
+                    <input type="text" id="first-name" name="first-name" required>
+
+                    <label for="last-name">Prénom</label>
+                    <input type="text" id="last-name" name="last-name" required><br>
+
+                    <label for="password">Votre mot de passe</label>
+                    <input type="password" id="password" name="password" required><br>
+
+                    <label for="repassword">Veuillez resaisir votre mot de passe</label>
+                    <input type="password" id="repassword" name="repassword" required><br>
+
+                    <label for="phoneNumber">Votre numéro de téléphone</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+                    <input type="submit" value="Terminer">
+                </form>
             </div>
         </div>
+
+        </div>
+    </div>
+    </div>
 </section>
 
 
-<section class="two_box" id="about">
+<section class="two_box">
     <h1>AssuerPlus, votre complice de vies</h1>
     <hr>
     <br>
@@ -75,14 +106,14 @@
     </span>   
 </section>
 
-<section class="two_box" id="map">
+<section class="two_box">
         <h1>Nos agences</h1>
             <hr>
             <br>
         <div class="map"></div>
 </section>
 
-<section class="two_box" id="help" style="display: flex; flex-wrap: wrap;">
+<section class="two_box" style="display: flex; flex-wrap: wrap;">
     <div class="help">
             <div class="help-contact">
                 <h1>Assistance</h1>
