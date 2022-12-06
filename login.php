@@ -1,49 +1,25 @@
+<?php 
+require('./settings/config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/web/img/favicon_car.png"/>
-    <link rel="apple-touch-icon" href="/web/img/favicon_car.png"/>
-    <link rel="stylesheet" href="/web/css/style.css">
-    <link rel="stylesheet" href="/web/css/index.css">
-    <link rel="stylesheet" href="/web/css/login.css">
-    <link rel="stylesheet" href="/web/css/header.css">
-    <title>Connexion - AssuerPlus</title>
-    <script>
-        function myFunction() {
-            document.getElementById("check").checked = false;
-        }
-    </script>
+    <link rel="shortcut icon" href="./web/img/favicon_car.png"/>
+    <link rel="apple-touch-icon" href="./web/img/favicon_car.png"/>
+    <link rel="stylesheet" href="./web/css/style.css">
+    <link rel="stylesheet" href="./web/css/index.css">
+    <link rel="stylesheet" href="./web/css/login.css">
+    <link rel="stylesheet" href="./web/css/header.css">
+    <title>Connexion - <?php echo($sitename); ?></title>
+    <script src="./web/js/header.js"></script>
 </head>
 <body>
 
-<header class="head">
-    <div class="head-left">
-        <span class="logo">AssuerPlus</span>
-        <div class="slogan">Le spécialiste de l'assurance auto depuis 20 ans !</div>
-    </div>
-
-    <div class="head-right">
-    
-        <input type="checkbox" name="menu" id="check" value="">
-        <div class="hamburger-lines">
-            <span class="line line1"></span>
-            <span class="line line2"></span>
-            <span class="line line3"></span>
-        </div>
-                
-        <ul class="menu-items">
-            <li style="border: none;"><a onclick="myFunction()" href="index.html">Le groupe AssuerPlus</a></li>
-            <li><a onclick="myFunction()" href="#">Nos agences</a></li>
-            <li><a onclick="myFunction()" href="#">Assistance</a></li>
-            <li><a onclick="myFunction()" href="login.html">Mon espace personnel</a></li>
-        </ul>
-
-    </div>
-</header>
-
+<?php require('./head/header.php') ?>
 
 <section class="one_box">
     <div class="bg1">
@@ -51,12 +27,51 @@
         <div class="login-form">
             <h1>Accéder à mon espace personnel Assurances</h1>
 
+<?php
+session_start();
+
+if (isset($_SESSION['id'])) {
+    header('Location: home.php');
+    exit;
+}
+
+$fail = FALSE;
+if ('POST' == $_SERVER['REQUEST_METHOD']) {
+
+    $stmt = $bdd->prepare('SELECT * FROM clients WHERE email = :email');
+    $stmt->execute(['email' => $_POST['mail']]);
+    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        if (password_verify($_POST['password'], $row['password'])) {
+            $_SESSION['id'] = $row['id'];
+            /* if (password_needs_rehash($row['password'], $password_options['algo'], $password_options['options'])) {
+                $stmt = $bdd->prepare('UPDATE clients SET password = :new_hash WHERE id = :id');
+                $stmt->execute([
+                    'id' => $row['id'],
+                    'new_hash' => password_hash($_POST['password'], $password_options['algo'], $password_options['options']),
+                ]);
+            } 
+            */
+            header('Location: home.php');
+            exit;
+        } else {
+            $fail = TRUE;
+        }
+    } else {
+        $fail = TRUE;
+    }
+}
+?>
+
+<?php if ($fail): ?>
+<p class="alert alert-info">Aucun utilisateur ne correspond à ce couple login/mot de passe.</p>
+<?php endif ?>
+
             <form action="#" method="post">
             <label for="mail">N° de souscripteur / email</label><br>
-            <input type="text" placeholder="ex: 56444392829..." name="nOrMail" id="mail" required><br>
+            <input type="text" placeholder="ex: 56444392829..." name="mail" id="mail" required><br>
             <label for="password">Mot de passe</label><br>
-            <input type="text" placeholder="******" type="password" id="password" name="password" required><br>
-            <small><a href="first-login.html">1ère connexion / Mot de passe oublié ?</a></small>
+            <input type="password" placeholder="******" type="password" id="password" name="password" required><br>
+            <small><a href="./first-login.php">1ère connexion / Mot de passe oublié ?</a></small>
             <input type="submit" value="Se connecter">
             </form>
 
@@ -66,8 +81,8 @@
 </section>
 
 
-<section class="two_box">
-    <h1>AssuerPlus, votre complice de vies</h1>
+<section class="two_box" id="about">
+    <h1><?php echo($sitename); ?>, votre complice de vies</h1>
     <hr>
     <br>
     <span>
@@ -75,14 +90,14 @@
     </span>   
 </section>
 
-<section class="two_box">
+<section class="two_box" id="map">
         <h1>Nos agences</h1>
             <hr>
             <br>
         <div class="map"></div>
 </section>
 
-<section class="two_box" style="display: flex; flex-wrap: wrap;">
+<section class="two_box" id="help" style="display: flex; flex-wrap: wrap;">
     <div class="help">
             <div class="help-contact">
                 <h1>Assistance</h1>
@@ -97,17 +112,14 @@
               
             </div>
             <div class="pictures">
-                <div style="background-image: url(/web/img/first-contact-picture.png); margin-bottom: 20px; border-radius: 10px 10px 0px 0px; width: 80%; height: 200px;"></div>
-                <div style="background-image: url(/web/img/second-contact-picture.png); border-radius: 0px 0px 10px 10px; background-size: cover; width: 80%; height: 200px;"></div>
+                <div style="background-image: url(./web/img/first-contact-picture.png); margin-bottom: 20px; border-radius: 10px 10px 0px 0px; width: 80%; height: 200px;"></div>
+                <div style="background-image: url(./web/img/second-contact-picture.png); border-radius: 0px 0px 10px 10px; background-size: cover; width: 80%; height: 200px;"></div>
             </div>
     </div>
     
 </section>
 
-
-<footer>
-    <p>© 2022 - <b>AssuerPlus</b>, Tous droits réservés</p>
-</footer>
+<?php require('./head/footer.php') ?>
     
 </body>
 </html>

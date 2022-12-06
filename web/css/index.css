@@ -8,7 +8,7 @@ section.one_box {
     .one_box .bg {
         width: 100%; 
         min-height: 60vh;
-        background-image: url(/web/img/banniere.png);
+        background-image: url(/AssuerPlus/web/img/banniere.png);
         background-size: cover;
     }
 
@@ -40,7 +40,7 @@ section.one_box {
                 width: 55px;
                 box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.639);
                 border-radius: 50%;
-                background-image: url(/web/img/icon_voiture.png);
+                background-image: url(/AssuerPlus/web/img/icon_voiture.png);
                 margin: auto auto 10% auto;
             }
 
@@ -49,7 +49,7 @@ section.one_box {
                 width: 55px;
                 box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.639);
                 border-radius: 50%;
-                background-image: url(/web/img/icon_sinistre.png);
+                background-image: url(/AssuerPlus/web/img/icon_sinistre.png);
                 margin: auto auto 10% auto;
             }
 
@@ -58,7 +58,7 @@ section.one_box {
                 width: 55px;
                 box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.639);
                 border-radius: 50%;
-                background-image: url(/web/img/icon_assurance.png);
+                background-image: url(/AssuerPlus/web/img/icon_assurance.png);
                 margin: auto auto 10% auto;
             }
 
@@ -118,7 +118,7 @@ section.two_box {
         border-radius: 10px; 
         width: 80%; 
         height: 950px; 
-        background-image: url(/web/img/map.png);
+        background-image: url(/AssuerPlus/web/img/map.png);
     }
 
     .help {

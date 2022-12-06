@@ -1,47 +1,24 @@
+<?php 
+require('./settings/config.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/web/img/favicon_car.png"/>
-    <link rel="apple-touch-icon" href="/web/img/favicon_car.png"/>
-    <link rel="stylesheet" href="/web/css/style.css">
-    <link rel="stylesheet" href="/web/css/index.css">
-    <link rel="stylesheet" href="/web/css/header.css">
-    <title>AssuerPlus – Assurance auto</title>
-    <script>
-        function myFunction() {
-            document.getElementById("check").checked = false;
-        }
-    </script>
+    <link rel="shortcut icon" href="./web/img/favicon_car.png"/>
+    <link rel="apple-touch-icon" href="./web/img/favicon_car.png"/>
+    <link rel="stylesheet" href="./web/css/style.css">
+    <link rel="stylesheet" href="./web/css/index.css">
+    <link rel="stylesheet" href="./web/css/header.css">
+    <title><?php echo($sitename); ?> – Assurance auto</title>
+    <script src="./web/js/header.js"></script>
 </head>
 <body>
 
-<header class="head">
-    <div class="head-left">
-        <span class="logo">AssuerPlus</span>
-        <div class="slogan">Le spécialiste de l'assurance auto depuis 20 ans !</div>
-    </div>
 
-    <div class="head-right">
-    
-        <input type="checkbox" name="menu" id="check" value="">
-        <div class="hamburger-lines">
-            <span class="line line1"></span>
-            <span class="line line2"></span>
-            <span class="line line3"></span>
-        </div>
-                
-        <ul class="menu-items">
-            <li style="border: none;"><a onclick="myFunction()" href="#about">Le groupe AssuerPlus</a></li>
-            <li><a onclick="myFunction()" href="#map">Nos agences</a></li>
-            <li><a onclick="myFunction()" href="#help">Assistance</a></li>
-            <li><a onclick="myFunction()" href="login.html">Mon espace personnel</a></li>
-        </ul>
-
-    </div>
-</header>
+<?php require('./head/header.php') ?>
 
 
 <section class="one_box">
@@ -55,7 +32,7 @@
             <div class="opt">
                 <div class="icon-sinistre"></div>
                 <h1>Sinistre</h1>
-                <a href="#">Déclarer un sinistre</a>
+                <a href="./home.php">Déclarer un sinistre</a>
             </div>
             <div class="opt">
                 <div class="icon-assurance"></div>
@@ -67,7 +44,7 @@
 
 
 <section class="two_box" id="about">
-    <h1>AssuerPlus, votre complice de vies</h1>
+    <h1><?php echo($sitename); ?>, votre complice de vies</h1>
     <hr>
     <br>
     <span>
@@ -97,17 +74,14 @@
               
             </div>
             <div class="pictures">
-                <div style="background-image: url(/web/img/first-contact-picture.png); margin-bottom: 20px; border-radius: 10px 10px 0px 0px; width: 80%; height: 200px;"></div>
-                <div style="background-image: url(/web/img/second-contact-picture.png); border-radius: 0px 0px 10px 10px; background-size: cover; width: 80%; height: 200px;"></div>
+                <div style="background-image: url(./web/img/first-contact-picture.png); margin-bottom: 20px; border-radius: 10px 10px 0px 0px; width: 80%; height: 200px;"></div>
+                <div style="background-image: url(./web/img/second-contact-picture.png); border-radius: 0px 0px 10px 10px; background-size: cover; width: 80%; height: 200px;"></div>
             </div>
     </div>
     
 </section>
 
-
-<footer>
-    <p>© 2022 - <b>AssuerPlus</b>, Tous droits réservés</p>
-</footer>
+<?php require('./head/footer.php') ?>
     
 </body>
 </html>
