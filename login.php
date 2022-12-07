@@ -1,7 +1,52 @@
 <?php 
 require('./settings/config.php');
-?>
 
+session_start();
+
+$fail = FALSE;
+if ('POST' == $_SERVER['REQUEST_METHOD']) {
+
+    $stmt = $bdd->prepare('SELECT * FROM clients WHERE email = :numOrEmail');
+    $stmtp = $bdd->prepare('SELECT * FROM clients WHERE numClient = :numOrEmail');
+    $stmt->execute(['numOrEmail' => $_POST['numOrEmail']]);
+    $stmtp->execute(['numOrEmail' => $_POST['numOrEmail']]);
+
+    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        if (password_verify($_POST['pass'], $row['password'])) {
+            $_SESSION['id'] = $row['id'];
+            if (password_needs_rehash($row['pass'], $password_options['algo'], $password_options['options'])) {
+                $stmt = $bdd->prepare('UPDATE clients SET password = :new_hash WHERE id = :id');
+                $stmt->execute([
+                    'id' => $row['id'],
+                    'new_hash' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
+                ]);
+            }
+            header('Location: home.php');
+            exit;
+        } else {
+            $fail = TRUE;
+        }
+
+    } elseif($row = $stmtp->fetch(PDO::FETCH_ASSOC)) {
+        if (password_verify($_POST['pass'], $row['password'])) {
+            $_SESSION['id'] = $row['id'];
+            if (password_needs_rehash($row['pass'], $password_options['algo'], $password_options['options'])) {
+                $stmtp = $bdd->prepare('UPDATE clients SET password = :new_hash WHERE id = :id');
+                $stmtp->execute([
+                    'id' => $row['id'],
+                    'new_hash' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
+                ]);
+            }
+            header('Location: home.php');
+            exit;
+        } else {
+            $fail = TRUE;
+        }
+    } else {
+        $fail = TRUE;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,52 +70,17 @@ require('./settings/config.php');
     <div class="bg1">
     <div class="login">
         <div class="login-form">
-            <h1>Accéder à mon espace personnel Assurances</h1>
-
-<?php
-session_start();
-
-if (isset($_SESSION['id'])) {
-    header('Location: home.php');
-    exit;
-}
-
-$fail = FALSE;
-if ('POST' == $_SERVER['REQUEST_METHOD']) {
-
-    $stmt = $bdd->prepare('SELECT * FROM clients WHERE email = :email');
-    $stmt->execute(['email' => $_POST['mail']]);
-    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        if (password_verify($_POST['password'], $row['password'])) {
-            $_SESSION['id'] = $row['id'];
-            /* if (password_needs_rehash($row['password'], $password_options['algo'], $password_options['options'])) {
-                $stmt = $bdd->prepare('UPDATE clients SET password = :new_hash WHERE id = :id');
-                $stmt->execute([
-                    'id' => $row['id'],
-                    'new_hash' => password_hash($_POST['password'], $password_options['algo'], $password_options['options']),
-                ]);
-            } 
-            */
-            header('Location: home.php');
-            exit;
-        } else {
-            $fail = TRUE;
-        }
-    } else {
-        $fail = TRUE;
-    }
-}
-?>
+            <h1 style="overflow: hidden;">Accéder à mon espace personnel</h1>
 
 <?php if ($fail): ?>
-<p class="alert alert-info">Aucun utilisateur ne correspond à ce couple login/mot de passe.</p>
+<p style="margin-top: 10px; width: 80%; display: block; padding: 10px; border-radius: 8px; background-color: #df3b3b; color: #FFF;">N° de souscripteur / email ou mot de passe incorrect.</p>
 <?php endif ?>
 
-            <form action="#" method="post">
+            <form action="" method="post">
             <label for="mail">N° de souscripteur / email</label><br>
-            <input type="text" placeholder="ex: 56444392829..." name="mail" id="mail" required><br>
+            <input type="text" placeholder="ex: 56444392829..." name="numOrEmail" id="mail" minlength="3" pattern="[A-Za-z-@-.--]" required><br>
             <label for="password">Mot de passe</label><br>
-            <input type="password" placeholder="******" type="password" id="password" name="password" required><br>
+            <input type="password" placeholder="*********" type="password" id="password" name="pass" required><br>
             <small><a href="./first-login.php">1ère connexion / Mot de passe oublié ?</a></small>
             <input type="submit" value="Se connecter">
             </form>

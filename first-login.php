@@ -1,4 +1,131 @@
-<?php require('./settings/config.php'); ?>
+<?php 
+require './settings/config.php';
+session_start();
+
+if (isset($_SESSION['id'])) {
+    header('Location: home.php');
+    exit;
+}
+
+const MIN_NAME_LEN = 3;
+const MAX_NAME_LEN = 10;
+const MIN_PASSWORD_LEN = 8;
+const TEL_LEN = 10;
+
+$errors = [];
+mb_internal_encoding('UTF-8');
+if ('POST' == $_SERVER['REQUEST_METHOD']) {
+
+
+    // NUM CLIENT
+
+    $numClient = (rand(1, 10000) * rand(1, 10000));
+    $stmt = $bdd->prepare('SELECT 1 FROM clients WHERE numClient = :numClient');
+    if (FALSE !== $stmt->fetchColumn()) {
+        $numClient = (rand(1, 10000) * rand(1, 10000) +1);
+    }
+
+    // MAIL
+
+    if (array_key_exists('email', $_POST)) {
+        $domain = substr(strrchr($_POST['email'], '@'), 1);
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "L'adresse email est invalide";
+        } else if (in_array($domain, BLACKLIST_EMAIL_PROVIDERS)) {
+            $errors['email'] = sprintf("Les adresses email provenant de '%s' ne sont pas acceptées", htmlspecialchars($domain));
+        } else {
+            $stmt = $bdd->prepare('SELECT 1 FROM clients WHERE email = :email');
+            $stmt->execute(['email' => $_POST['email']]);
+            if (FALSE !== $stmt->fetchColumn()) {
+                $errors['email'] = "Cette adresse email est déjà utilisée";
+            }
+        }
+    } else {
+        $errors['email'] = "L'adresse email est absente";
+    }
+
+    // NOM
+
+    if (array_key_exists('nom', $_POST)) {
+        $nom_length = mb_strlen($_POST['nom']);
+        if ($nom_length < MIN_NAME_LEN || $nom_length > MAX_NAME_LEN) {
+            $errors['nom'] = sprintf("Veuillez saisir votre vrai nom.");
+        }
+    } else {
+        $errors['nom'] = "Veuillez saisir votre nom.";
+    }
+
+    // PRENOM
+
+    if (array_key_exists('prenom', $_POST)) {
+        $prenom_length = mb_strlen($_POST['prenom']);
+        if ($prenom_length < MIN_NAME_LEN || $prenom_length > MAX_NAME_LEN) {
+            $errors['prenom'] = sprintf("Veuillez saisir votre vrai prénom.");
+        } 
+    } else {
+        $errors['prenom'] = "Veuillez saisir votre prénom.";
+    }
+
+    // TEL
+
+    if (array_key_exists('tel', $_POST)) {
+        $tel_length = mb_strlen($_POST['tel']);
+        if ($tel_length < TEL_LEN || $tel_length > TEL_LEN) {
+            $errors['tel'] = sprintf("Numéro de téléphone incorrect.");
+        } else if(!preg_match("#[0][6-7][- \.?]?([0-9][0-9][- \.?]?){4}$#", $_POST['tel'])){
+            $errors['tel'] = sprintf("Numéro de téléphone incorrect.");
+        } else {
+            $stmt = $bdd->prepare('SELECT 1 FROM clients WHERE tel = :tel');
+            $stmt->execute(['tel' => $_POST['tel']]);
+            if (FALSE !== $stmt->fetchColumn()) {
+                $errors['tel'] = "Ce numéro de téléphone est déjà utilisé.";
+            }
+        }
+    } else {
+        $errors['tel'] = "Veuillez saisir votre numéro de téléphone.";
+    }
+    
+
+    // MOT DE PASSE
+
+    if (array_key_exists('pass', $_POST)) {
+        $mdp_length = mb_strlen($_POST['pass']);
+        if ($mdp_length < MIN_PASSWORD_LEN) {
+            $errors['pass'] = sprintf("La longueur du mot de passe doit être d'au moins %d caractères", MIN_PASSWORD_LEN);
+        }
+        if ($_POST['pass'] != $_POST['repass']) {
+            $errors['repass'] = "Le mot de passe et sa confirmation ne coïncident pas.";
+        }
+    } else {
+        $errors['pass'] = "Veuillez saisir votre mot de passe.";
+    }
+
+    if (!$errors) {
+        $token = generate_token(32);
+        $insert = $bdd->prepare('
+                INSERT INTO clients(numClient, email, nom, prenom, password, tel, bonus, malus, confirmation_token, confirmation_token_sent_at)
+                VALUES(:numClient, :email, :nom, :prenom, :pass, :tel, :bonus, :malus, :confirmation_token, NOW())
+            '
+        );
+        $insert->execute([
+            'numClient' => $numClient,
+            'email' => $_POST['email'],
+            'nom' => $_POST['nom'],
+            'prenom' => $_POST['prenom'],
+            'pass' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
+            'tel' => $_POST['tel'],
+            'bonus' => 100,
+            'malus' => 0,
+            'confirmation_token' => $token,
+        ]);
+
+        # envoi du mail de confirmation
+        send_mail_confirmation($_POST['email'], $_POST['nom'], $token);
+        header('Location: home.php');
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,10 +146,21 @@
 
 <?php require('./head/header.php') ?>
 
-
 <section class="one_box">
-    <div class="bg1">
-    <div class="forgot-pass">
+<div class="bg1">
+
+    <?php if ($errors): ?>
+    <div class="error">
+    <p>Veuillez corriger les erreurs ci-dessous afin de réaliser votre inscription :</p><br>
+    <ul>
+    <?php foreach ($errors as $e): ?>
+    <li style="text-align: left;"><?= $e ?></li>
+    <?php endforeach ?>
+    </ul>
+    </div>
+    <?php endif ?>
+
+    <div class="forgot-pass" style="padding-bottom: 60px;">
         <div class="pass">
             <h1>Demande de mot de passe</h1>
 
@@ -32,7 +170,7 @@
             <a onclick="newUser()" href="#" class="answer" id="no" style="background-color: #fff; color: #1E1E1E; border: 1px solid #1E1E1E;">Non</a>
 
             <div class="first-contain">
-                <form action="#" method="post">
+                <form action="#">
                     <label for="numS">Votre numéro de souscripteur</label><br>
                     <input type="text" name="nOrMail" id="numS" required><br>
                     <label for="mail">Votre email</label><br>
@@ -41,61 +179,25 @@
                 </form>
             </div>
 
-<?php 
-if (isset($_REQUEST['mail'], $_REQUEST['first-name'], $_REQUEST['last-name'], $_REQUEST['password'], $_REQUEST['repassword'], $_REQUEST['phoneNumber'])){
-            
-    // récupérer l'email
-    $mail = stripslashes($_REQUEST['mail']);
-    $mail = mysqli_real_escape_string($conn, $mail); 
-    // récupérer le prénom
-    $firstName = stripslashes($_REQUEST['first-name']);
-    $firstName = mysqli_real_escape_string($conn, $firstName);
-    // récupérer le nom
-    $lastName = stripslashes($_REQUEST['last-name']);
-    $lastName = mysqli_real_escape_string($conn, $lastName);
-    // récupérer le mot de passe 
-    $password = stripslashes($_REQUEST['password']);
-    $password = mysqli_real_escape_string($conn, $password);
-   /* // récupérer le re mot de passe 
-    $repassword = stripslashes($_REQUEST['repassword']);
-    $repassword = mysqli_real_escape_string($conn, $repassword);
-    */
-    // récupérer le téléphone
-    $tel = stripslashes($_REQUEST['phoneNumber']);
-    $tel = mysqli_real_escape_string($conn, $tel);
-    
-    $query = "INSERT into `clients` (email, password, prenom, nom, tel)
-    VALUES ('$mail', '".hash('sha256', $password)."', '$firstName', '$lastName', '$tel')";
-    $res = mysqli_query($conn, $query);
-      if($res){
-         echo "<div class='sucess'>
-               <h3>Vous êtes inscrit avec succès.</h3>";
-               header("Location : home.php");
-      }
-      
-} else {
-    echo"ERREUR!";
-  }
-?>
 
             <div class="second-contain" style="display: none;">
-                <form action="#" method="post">
+                <form action="" method="post">
                     <label for="mail">Votre email</label><br>
-                    <input type="email" name="mail" id="mail" required><br>
+                    <input type="email" name="email" id="mail" required><br>
                     <label for="first-name">Nom</label>
-                    <input type="text" id="first-name" name="first-name" required>
+                    <input type="text" id="first-name" name="nom" minlength="<?php echo(MIN_NAME_LEN); ?>" maxlength="<?php echo(MAX_NAME_LEN); ?>" pattern="[A-Za-z]{3,10}" required>
 
                     <label for="last-name">Prénom</label>
-                    <input type="text" id="last-name" name="last-name" required><br>
+                    <input type="text" id="last-name" name="prenom" minlength="<?php echo(MIN_NAME_LEN); ?>" maxlength="<?php echo(MAX_NAME_LEN); ?>" pattern="[A-Za-z]{3,10}" required><br>
 
                     <label for="password">Votre mot de passe</label>
-                    <input type="password" id="password" name="password" required><br>
+                    <input type="password" id="password" name="pass" minlength="8" required><br>
 
                     <label for="repassword">Veuillez resaisir votre mot de passe</label>
-                    <input type="password" id="repassword" name="repassword" required><br>
+                    <input type="password" id="repassword" name="repass" minlength="8" required><br>
 
                     <label for="phoneNumber">Votre numéro de téléphone</label>
-                    <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                    <input type="tel" id="phoneNumber" name="tel" minlength="<?php echo(TEL_LEN); ?>" maxlength="<?php echo(TEL_LEN); ?>" required>
 
                     <input type="submit" value="Terminer">
                 </form>

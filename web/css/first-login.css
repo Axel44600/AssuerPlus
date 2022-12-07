@@ -3,11 +3,12 @@
     min-height: 60vh;
     background-image: url(/AssuerPlus/web/img/banniere.png);
     background-size: cover;
+    padding-top: 20px;
 }
 
 .forgot-pass {
     width: 100%; 
-    padding-top: 100px;
+    padding-top: 80px;
 }
     .pass {
         background-color: #FFF; 
@@ -84,6 +85,15 @@
             width: 92%;
         }
 
+    .error {
+        width: 550px; 
+        text-align: center; 
+        padding: 10px; 
+        border-radius: 8px; 
+        background-color: #df3b3b; 
+        color: #FFF;
+    }
+
 @media only screen and (max-width: 425px) 
 {    
     .one_box .bg1 {
@@ -108,5 +118,15 @@
         .pass h1 {
             font-size: 18px;
         }
+
+    .error {
+        width: 90%; 
+        text-align: center; 
+        font-size: 14px;
+        padding: 6px; 
+        border-radius: 8px; 
+        background-color: #df3b3b; 
+        color: #FFF;
+    }
 
 }

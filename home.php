@@ -1,14 +1,18 @@
 <?php 
-require('./settings/config.php');
+require './settings/config.php';
 
-  session_start();
-  if(!isset($_SESSION["mail"])){
-    header("Location: login.php");
-    exit(); 
-  }
+session_start();
 
-  $sql = 'SELECT prenom FROM clients WHERE email=:mail';
+if (!isset($_SESSION['id'])) {
+    header('Location: login.php');
+    exit;
+}
 
+
+$stmt = $bdd->prepare('SELECT * FROM clients WHERE id = :id');
+$stmt->bindParam('id', $_SESSION['id'], PDO::PARAM_INT);
+$stmt->execute();
+$user = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +38,8 @@ require('./settings/config.php');
 
 
     <div class="right">
-        <h1><b><?php echo($sql); ?> : </b><br> <p>mon espace personnel</p></h1>
+        <h1><b><?= htmlspecialchars($user['prenom'], ENT_NOQUOTES) ?> <?= htmlspecialchars($user['nom'], ENT_NOQUOTES) ?>
+        : </b><br> <p>mon espace personnel</p></h1>
         <ul>
            <div class="bc1"></div>
            <div onclick="window.location.href = './logout.php'" class="bc2">Se déconnecter</div>
@@ -143,8 +148,8 @@ require('./settings/config.php');
         <span style="border-bottom: 2px solid #1E1E1E; background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;" class="title">Mes sinistres</span>
         
         <div style="display: flex;">
-          <div class="bonus">BONUS : <b>80%</b></div>
-          <div class="malus">MALUS : <b>20%</b></div>
+          <div class="bonus">BONUS : <b><?= htmlspecialchars($user['bonus'], ENT_NOQUOTES) ?>%</b></div>
+          <div class="malus">MALUS : <b><?= htmlspecialchars($user['malus'], ENT_NOQUOTES) ?>%</b></div>
         </div>
 
         <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
@@ -164,18 +169,18 @@ require('./settings/config.php');
 
             <div style="text-align: left; display: inline-block; width: 45%;">
                 <label for="telephone">N° de téléphone</label><br>
-                <input type="tel" id="telephone" name="tel" value="0766433025" required>
+                <input type="tel" id="telephone" name="tel" value="<?= htmlspecialchars($user['tel'], ENT_NOQUOTES) ?>" required>
             </div>
 
             
             <div style="margin-top: 10px; text-align: left; display: inline-block; width: 25%;">
                 <label for="first-name">Nom</label><br>
-                <input type="text" id="first-name" value="Gaudin" disabled>
+                <input type="text" id="first-name" value="<?= htmlspecialchars($user['nom'], ENT_NOQUOTES) ?>" disabled>
             </div>
 
             <div style="margin-top: 10px; text-align: left; display: inline-block; width: 25%;">
                 <label for="last-name">Prénom</label><br>
-                <input type="text" id="last-name" value="Axel" disabled>
+                <input type="text" id="last-name" value="<?= htmlspecialchars($user['prenom'], ENT_NOQUOTES) ?>" disabled>
             </div>
 
             <div style="margin-top: 10px; text-align: left; display: inline-block; width: 45%;">
