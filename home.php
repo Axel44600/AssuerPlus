@@ -8,7 +8,6 @@ if (!isset($_SESSION['id'])) {
     exit;
 }
 
-
 $stmt = $bdd->prepare('SELECT * FROM clients WHERE id = :id');
 $stmt->bindParam('id', $_SESSION['id'], PDO::PARAM_INT);
 $stmt->execute();
@@ -26,7 +25,6 @@ $user = $stmt->fetch();
     <link rel="stylesheet" href="./web/css/home.css">
     <link rel="stylesheet" href="./web/css/header.css">
     <title>Mon espace personnel - <?php echo($sitename); ?></title>
-
 </head>
 <body>
 
@@ -48,35 +46,49 @@ $user = $stmt->fetch();
     </div>
 </header>
 
+<?php
+$sth = $bdd->prepare('SELECT * FROM messagerie WHERE numClient = '.$user['numClient'].'');
+$sth->execute();
+$message = $sth->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <section id="one">
     <div class="messagerie">
         <span class="title">Messagerie</span>
 
-        <div class="contain" style="overflow-y: scroll;">
+    <div style="overflow-y:scroll; height: 200px;">
+        <div class="contain">
             <div class="msg">
                 <u><b>Assistant <?php echo($sitename); ?> :</b></u><br>
                 <p>N'hésitez pas à me contacter en cas de problèmes, je suis à votre service !</p>
             </div>
 
-            <div class="answer">
-                <u><b>Moi :</b></u>
-                <p>Merci à vous pour votre disponibilité.</p>
-            </div>
+            <?php 
+            if(empty($message)){ 
+               
+            } else {
+                foreach ($message as $m){
+                    echo '<div class="answer" style="max-width: 300px;  word-wrap:break-word;">
+                    <u><b>Moi :</b></u> <p>'.htmlspecialchars($m['msg']).'</p></div> ';
+                }   
+             }
+            ?>
         </div>
-        <form action="#">
-            <input type="text" placeholder="Votre message" required>
+    </div>
+
+        <form action="./templates/messagerie.php" method="post">
+            <input type="text" name="msg" placeholder="Votre message" maxlength="100" required>
             <input type="submit" value="Envoyer">
         </form>
     </div>
 
     
-    <div class="contrats">
+    <div class="contrats" style="opacity: 0.7;">
         <span class="title">Mes contrats</span>
-        <div style="padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; flex-direction: column; align-content: stretch;">
+        <div style="padding: 10px; text-align: center; line-height: 30px;">
             
-            <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
-            <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
-            <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
+          <h1>Indisponible pour le moment...</h1>
+          <img style="margin-top: 20px; width: 23%; " src="./web/img/loading.gif" alt="">
         </div>
     </div>
 </section>
@@ -85,7 +97,7 @@ $user = $stmt->fetch();
     <div class="sinistre">
         <span class="title" style="background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;">Déclarer un sinistre</span>
     
-        <form action="#" method="post">
+        <form action="./templates/sinistre.php" method="post">
             <div style="text-align: left; display: inline-block; width: 45%;">
                 <label for="immac">N° d'immatriculation</label>
                 <input type="text" id="immac" name="immac" required>
@@ -95,22 +107,22 @@ $user = $stmt->fetch();
                 <label for="select">Type de sinistre</label>
 
                 <select name="type" id="select">
-                    <option value="dog">Accident / Collision</option>
-                    <option value="cat">Bris de glace</option>
-                    <option value="hamster">Vol</option>
-                    <option value="parrot">Incendie</option>
+                    <option value="Accident / Collision">Accident / Collision</option>
+                    <option value="Bris de glace">Bris de glace</option>
+                    <option value="Vol">Vol</option>
+                    <option value="Incendie">Incendie</option>
                 </select>
             </div>
 
             
             <div style="margin-top: 10px; text-align: left; display: inline-block; width: 90%;">
                 <label for="about">Décrivez le sinistre en détails</label>
-                <textarea name="details" id="" cols="30" rows="10" required></textarea>
+                <textarea name="details" id="about" cols="30" rows="10" required></textarea>
             </div>
 
             
                 <p class="file">
-                    <input class="input-file" id="my-file" type="file" multiple required>
+                    <input class="input-file" name="documents" id="my-file" type="file" multiple required>
 
                 <div style="display: inline-block; width: 45%;">
                     <label for="my-file" class="input-file-trigger">Transférer mes documents</label>
@@ -143,6 +155,12 @@ $user = $stmt->fetch();
     </div>
 </section>
 
+<?php
+$sts = $bdd->prepare('SELECT * FROM sinistre WHERE numClient = '.$user['numClient'].'');
+$sts->execute();
+$sinistre = $sts->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <section id="three">
     <div class="my-sinistre">
         <span style="border-bottom: 2px solid #1E1E1E; background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;" class="title">Mes sinistres</span>
@@ -152,24 +170,37 @@ $user = $stmt->fetch();
           <div class="malus">MALUS : <b><?= htmlspecialchars($user['malus'], ENT_NOQUOTES) ?>%</b></div>
         </div>
 
-        <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
-        <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
-        <div style="margin-top: 10px; margin-bottom: 10px; background-color: grey; width: 90%; height: 50px; border-radius: 10px; "></div>
+        <?php 
+            if(empty($sinistre)){ 
+               
+            } else {
+                foreach ($sinistre as $s){
+                    echo '<div class="list-sinistre">
+                    <h3><u>Sinistre du 
+                    '.substr(htmlspecialchars($s['dateSinistre']), 8, 8).'
+                    '.substr(htmlspecialchars($s['dateSinistre']), 4, 4).'
+                    '.substr(htmlspecialchars($s['dateSinistre']), 0, 4).'
+                    :</u> '.htmlspecialchars($s['typeSinistre']).' 
+                    <i>[ '.htmlspecialchars($s['immatriculation']).' ]</i>
+                    </h3></div>';
+                }   
+             }
+        ?>
     </div>
 
     <div class="profil">
         <span class="title" style="border-bottom: 2px solid #eee; background-color: #FFF; color: #1E1E1E;">Mes coordonnées</span>
         
-        <form action="#" method="post">
+        <form action="./templates/param.php" method="post">
 
             <div style="text-align: left; display: inline-block; width: 50%;">
                 <label for="adresse">Adresse</label><br>
-                <input type="text" style="width: 90%;" id="adresse" name="adresse" value="9 Rue Philibert Delorme" required>
+                <input type="text" style="width: 90%;" id="adresse" name="adresse" value="<?= htmlspecialchars($user['adresse'], ENT_NOQUOTES) ?>" required>
              </div>
 
             <div style="text-align: left; display: inline-block; width: 45%;">
                 <label for="telephone">N° de téléphone</label><br>
-                <input type="tel" id="telephone" name="tel" value="<?= htmlspecialchars($user['tel'], ENT_NOQUOTES) ?>" required>
+                <input type="tel" id="telephone" name="tel" value="<?= htmlspecialchars($user['tel'], ENT_NOQUOTES) ?>" minlength="10" maxlength="10" required>
             </div>
 
             

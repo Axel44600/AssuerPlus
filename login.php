@@ -6,34 +6,17 @@ session_start();
 $fail = FALSE;
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
 
-    $stmt = $bdd->prepare('SELECT * FROM clients WHERE email = :numOrEmail');
-    $stmtp = $bdd->prepare('SELECT * FROM clients WHERE numClient = :numOrEmail');
+    $stmt = $bdd->prepare('SELECT * FROM clients WHERE email = :numOrEmail OR numClient = :numOrEmail');
     $stmt->execute(['numOrEmail' => $_POST['numOrEmail']]);
-    $stmtp->execute(['numOrEmail' => $_POST['numOrEmail']]);
 
     if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if (password_verify($_POST['pass'], $row['password'])) {
             $_SESSION['id'] = $row['id'];
             if (password_needs_rehash($row['pass'], $password_options['algo'], $password_options['options'])) {
-                $stmt = $bdd->prepare('UPDATE clients SET password = :new_hash WHERE id = :id');
+                $stmt = $bdd->prepare('UPDATE clients SET password = :new_hash, ip = :ip WHERE id = :id');
                 $stmt->execute([
                     'id' => $row['id'],
-                    'new_hash' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
-                ]);
-            }
-            header('Location: home.php');
-            exit;
-        } else {
-            $fail = TRUE;
-        }
-
-    } elseif($row = $stmtp->fetch(PDO::FETCH_ASSOC)) {
-        if (password_verify($_POST['pass'], $row['password'])) {
-            $_SESSION['id'] = $row['id'];
-            if (password_needs_rehash($row['pass'], $password_options['algo'], $password_options['options'])) {
-                $stmtp = $bdd->prepare('UPDATE clients SET password = :new_hash WHERE id = :id');
-                $stmtp->execute([
-                    'id' => $row['id'],
+                    'ip' => getIp(),
                     'new_hash' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
                 ]);
             }

@@ -106,6 +106,7 @@ section {
 
             .contain .answer {
                 margin-right: 10px; 
+                margin-top: 10px;
                 background-color: #5e992b; 
                 color: #FFF;;
                 border-radius: 10px; padding: 10px;
@@ -255,6 +256,7 @@ section {
     section .my-sinistre {
         margin: 0; 
         width: 800px; 
+        overflow-y: scroll;
         height: 300px; 
         background-color: #FFF;
     }
@@ -279,6 +281,21 @@ section {
         line-height: 48px; 
         height: 50px; 
         border-radius: 0px 0px 4px 4px;
+    }
+
+    .my-sinistre .list-sinistre {
+        text-shadow: 2px 2px 4px #FFF; 
+        color: #1E1E1E; 
+        padding: 0px 5px 0px 20px; 
+        margin-top: 10px; 
+        margin-bottom: 10px; 
+        background-color: #EEE; 
+        text-underline-offset: 6px;
+        word-wrap: break-word;
+        width: 90%; 
+        line-height: 45px; 
+        min-height: 50px; 
+        border-radius: 10px;
     }
 
     section .profil {
@@ -372,6 +389,7 @@ section {
     ul .bc2:hover {
         width: 80%;
         background-color: #5e992b;
+        border-left: 1px solid #5e992b;
     }
 
     .messagerie form {

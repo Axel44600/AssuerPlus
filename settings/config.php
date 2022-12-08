@@ -15,9 +15,6 @@ $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sitename = "AssuerPlus";
 
 
-
-
-
 // Fonctions
 
 const BLACKLIST_EMAIL_PROVIDERS = [
@@ -59,6 +56,17 @@ function send_mail_confirmation(string $to, string $login, string $token): void 
         'Content-Type' => 'text/html; charset=UTF-8',
         # ...
     ];
-    mail($to, 'Validation de votre compte mon.site.fr', $message, $headers);
+    mail($to, 'Validation de votre compte AssuerPlus', $message, $headers);
 }
+
+function getIp() {
+    if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+      $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+  }
 ?>

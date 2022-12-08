@@ -41,7 +41,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
             }
         }
     } else {
-        $errors['email'] = "L'adresse email est absente";
+        $errors['email'] = "Veuillez saisir votre adresse email.";
     }
 
     // NOM
@@ -93,6 +93,9 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
         if ($mdp_length < MIN_PASSWORD_LEN) {
             $errors['pass'] = sprintf("La longueur du mot de passe doit être d'au moins %d caractères", MIN_PASSWORD_LEN);
         }
+        if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $_POST['pass'])) {
+            $errors['pass'] = "Votre mot de passe doit contenir une majuscule et un caractère spécial.";
+        }
         if ($_POST['pass'] != $_POST['repass']) {
             $errors['repass'] = "Le mot de passe et sa confirmation ne coïncident pas.";
         }
@@ -103,16 +106,15 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     if (!$errors) {
         $token = generate_token(32);
         $insert = $bdd->prepare('
-                INSERT INTO clients(numClient, email, nom, prenom, password, tel, bonus, malus, confirmation_token, confirmation_token_sent_at)
-                VALUES(:numClient, :email, :nom, :prenom, :pass, :tel, :bonus, :malus, :confirmation_token, NOW())
-            '
-        );
+                INSERT INTO clients(numClient, email, nom, prenom, password, ip, tel, bonus, malus, confirmation_token, confirmation_token_sent_at)
+                VALUES(:numClient, :email, :nom, :prenom, :pass, :ip, :tel, :bonus, :malus, :confirmation_token, NOW())');
         $insert->execute([
             'numClient' => $numClient,
             'email' => $_POST['email'],
             'nom' => $_POST['nom'],
             'prenom' => $_POST['prenom'],
             'pass' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
+            'ip' => getIp(),
             'tel' => $_POST['tel'],
             'bonus' => 100,
             'malus' => 0,
@@ -191,10 +193,10 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
                     <input type="text" id="last-name" name="prenom" minlength="<?php echo(MIN_NAME_LEN); ?>" maxlength="<?php echo(MAX_NAME_LEN); ?>" pattern="[A-Za-z]{3,10}" required><br>
 
                     <label for="password">Votre mot de passe</label>
-                    <input type="password" id="password" name="pass" minlength="8" required><br>
+                    <input type="password" id="password" name="pass" minlength="<?php echo(MIN_PASSWORD_LEN); ?>" required><br>
 
                     <label for="repassword">Veuillez resaisir votre mot de passe</label>
-                    <input type="password" id="repassword" name="repass" minlength="8" required><br>
+                    <input type="password" id="repassword" name="repass" minlength="<?php echo(MIN_PASSWORD_LEN); ?>" required><br>
 
                     <label for="phoneNumber">Votre numéro de téléphone</label>
                     <input type="tel" id="phoneNumber" name="tel" minlength="<?php echo(TEL_LEN); ?>" maxlength="<?php echo(TEL_LEN); ?>" required>
