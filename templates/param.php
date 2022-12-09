@@ -14,6 +14,13 @@ $stmt->execute();
 $user = $stmt->fetch();
 
     if ('POST' == $_SERVER['REQUEST_METHOD']) {
+        $tel_length = mb_strlen($_POST['tel']);
+        if ($tel_length < 10 || $tel_length > 10) {
+            header('Location: ../home.php');
+        } else if(!preg_match("#[0][6-7][- \.?]?([0-9][0-9][- \.?]?){4}$#", $_POST['tel'])) {
+            header('Location: ../home.php');
+        } else {
+
         $insert = $bdd->prepare('UPDATE clients SET tel = :tel, adresse = :adresse WHERE numClient = :numClient');
         $insert->execute([
             'tel' => $_POST['tel'],
@@ -21,7 +28,7 @@ $user = $stmt->fetch();
             'numClient' => $user['numClient'],
         ]);
         header('Location: ../home.php');
-    } else {
+    }} else {
         header('Location: ../index.php');
     }
 ?>

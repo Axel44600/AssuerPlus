@@ -100,7 +100,7 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
         <form action="./templates/sinistre.php" method="post">
             <div style="text-align: left; display: inline-block; width: 45%;">
                 <label for="immac">N° d'immatriculation</label>
-                <input type="text" id="immac" name="immac" required>
+                <input style="text-transform: uppercase;" type="text" id="immac" name="immac" minlength="8" maxlength="9" required>
              </div>
 
             <div style="text-align: left; display: inline-block; width: 45%;">
@@ -195,7 +195,7 @@ $sinistre = $sts->fetchAll(PDO::FETCH_ASSOC);
 
             <div style="text-align: left; display: inline-block; width: 50%;">
                 <label for="adresse">Adresse</label><br>
-                <input type="text" style="width: 90%;" id="adresse" name="adresse" value="<?= htmlspecialchars($user['adresse'], ENT_NOQUOTES) ?>" required>
+                <input type="text" style="width: 90%;" id="adresse" name="adresse" value="<?= htmlspecialchars($user['adresse'], ENT_NOQUOTES) ?>" maxlength="30" required>
              </div>
 
             <div style="text-align: left; display: inline-block; width: 45%;">
