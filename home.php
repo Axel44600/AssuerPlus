@@ -97,7 +97,7 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
     <div class="sinistre">
         <span class="title" style="background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;">Déclarer un sinistre</span>
     
-        <form action="./templates/sinistre.php" method="post">
+        <form action="./templates/sinistre.php" method="post" enctype="multipart/form-data">
             <div style="text-align: left; display: inline-block; width: 45%;">
                 <label for="immac">N° d'immatriculation</label>
                 <input style="text-transform: uppercase;" type="text" id="immac" name="immac" minlength="8" maxlength="9" required>
@@ -120,15 +120,15 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
                 <textarea name="details" id="about" cols="30" rows="10" required></textarea>
             </div>
 
-            
                 <p class="file">
-                    <input class="input-file" name="documents" id="my-file" type="file" multiple required>
+                    <input class="input-file" name="documents[]" id="my-file" type="file" multiple required>
 
                 <div style="display: inline-block; width: 45%;">
                     <label for="my-file" class="input-file-trigger">Transférer mes documents</label>
                     <p class="file-return"></p>
                 </p>
             </div>
+
             <div style="display: inline-block; width: 45%;">
                 <input type="submit" value="Déclarer mon sinistre">
             </div>
