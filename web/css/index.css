@@ -118,7 +118,7 @@ section.two_box {
         border-radius: 10px; 
         width: 80%; 
         height: 950px; 
-        background-image: url(/AssuerPlus/web/img/map.png);
+        background-image: url(https://www.cirraplus.com/wp-content/uploads/2022/02/france-carte-3dMAJ160222.png);
     }
 
     .help {
@@ -190,6 +190,7 @@ section.two_box {
 
         .map {
             height: 40vh;
+            width: 100%;
         }
 }
     

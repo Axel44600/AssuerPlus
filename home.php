@@ -7,6 +7,7 @@ if (!isset($_SESSION['id'])) {
     header('Location: login.php');
     exit;
 }
+include('./templates/sinistre.php');
 
 $stmt = $bdd->prepare('SELECT * FROM clients WHERE id = :id');
 $stmt->bindParam('id', $_SESSION['id'], PDO::PARAM_INT);
@@ -25,8 +26,14 @@ $user = $stmt->fetch();
     <link rel="stylesheet" href="./web/css/home.css">
     <link rel="stylesheet" href="./web/css/header.css">
     <title>Mon espace personnel - <?php echo($sitename); ?></title>
+    <script type="text/javascript">
+        function scrollToBottom() {
+            const el = document.getElementById("test");
+            el.scrollTop = el.scrollHeight;
+        }
+    </script>
 </head>
-<body>
+<body onload="scrollToBottom()">
 
 <header class="head" style="max-height: 800px;">
     <div class="head-left" style="margin-bottom: 15px;">
@@ -39,7 +46,11 @@ $user = $stmt->fetch();
         <h1><b><?= htmlspecialchars($user['prenom'], ENT_NOQUOTES) ?> <?= htmlspecialchars($user['nom'], ENT_NOQUOTES) ?>
         : </b><br> <p>mon espace personnel</p></h1>
         <ul>
+            <?php if($user['rang'] > 0) { ?>
+           <div onclick="window.location.href = './admin/dashboard.php'" class="bc2" style="border-radius: 4px 0px 0px 4px; background-color: #df3b3b; border-bottom: 1px solid #df3b3b; border-top: 1px solid #df3b3b;">Administration</div>
+            <?php } else { ?>
            <div class="bc1"></div>
+           <?php } ?>
            <div onclick="window.location.href = './logout.php'" class="bc2">Se déconnecter</div>
            <div class="bc3"></div>
         </ul>
@@ -47,7 +58,7 @@ $user = $stmt->fetch();
 </header>
 
 <?php
-$sth = $bdd->prepare('SELECT * FROM messagerie WHERE numClient = '.$user['numClient'].'');
+$sth = $bdd->prepare('SELECT * FROM messagerie WHERE numClient = '.$user['numClient'].' OR numClient = 0');
 $sth->execute();
 $message = $sth->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -56,7 +67,7 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
     <div class="messagerie">
         <span class="title">Messagerie</span>
 
-    <div style="overflow-y:scroll; height: 200px;">
+    <div id="test" style="overflow-y:scroll; height: 200px;" onscroll="scollPos();">
         <div class="contain">
             <div class="msg">
                 <u><b>Assistant <?php echo($sitename); ?> :</b></u><br>
@@ -68,8 +79,20 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
                
             } else {
                 foreach ($message as $m){
-                    echo '<div class="answer" style="max-width: 300px;  word-wrap:break-word;">
-                    <u><b>Moi :</b></u> <p>'.htmlspecialchars($m['msg']).'</p></div> ';
+                    if($m['numClient'] == $user['numClient']) {
+                        echo '<div class="answer" style="max-width: 300px;  word-wrap:break-word;">
+                        <b><u>Moi :</u> <small><i> ['.substr($m['dateMsg'], 8, 8).'
+                    '.substr($m['dateMsg'], 4, 4).'
+                    '.substr($m['dateMsg'], 0, 4).']</small></i></b> <p>'.htmlspecialchars($m['msg']).'</p></div> ';
+
+                    } elseif($m['numClient'] == 0 && $m['destinataire'] == $user['numClient']) {
+                        echo '<div class="msg" style="max-width: 300px;  word-wrap:break-word;">
+                        <b><u>Assistant '.$sitename.' :</u><small><i> ['.substr($m['dateMsg'], 8, 8).'
+                    '.substr($m['dateMsg'], 4, 4).'
+                    '.substr($m['dateMsg'], 0, 4).']</small></i></b> 
+                        <p>'.htmlspecialchars($m['msg']).'</p></div> ';
+                    }
+                
                 }   
              }
             ?>
@@ -83,21 +106,19 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     
-    <div class="contrats" style="opacity: 0.7;">
-        <span class="title">Mes contrats</span>
-        <div style="padding: 10px; text-align: center; line-height: 30px;">
-            
-          <h1>Indisponible pour le moment...</h1>
-          <img style="margin-top: 20px; width: 23%; " src="./web/img/loading.gif" alt="">
+    <div class="contrats" style="background-color: transparent; opacity: 0.7;">
+        <div style="background-position: center; width: 100%; height: 300px; background-size: cover; background-image: url('https://img-4.linternaute.com/JpFhmYdrX5SU-sHaq7FN-fdunN8=/1500x/smart/0ab273536fee4e74b6948ad52bbdad2f/ccmcms-linternaute/25016915.jpg');">
         </div>
     </div>
 </section>
+
+
 
 <section id="two">
     <div class="sinistre">
         <span class="title" style="background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;">Déclarer un sinistre</span>
     
-        <form action="./templates/sinistre.php" method="post" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data">
             <div style="text-align: left; display: inline-block; width: 45%;">
                 <label for="immac">N° d'immatriculation</label>
                 <input style="text-transform: uppercase;" type="text" id="immac" name="immac" minlength="8" maxlength="9" required>
@@ -177,9 +198,9 @@ $sinistre = $sts->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($sinistre as $s){
                     echo '<div class="list-sinistre">
                     <h3><u>Sinistre du 
-                    '.substr(htmlspecialchars($s['dateSinistre']), 8, 8).'
-                    '.substr(htmlspecialchars($s['dateSinistre']), 4, 4).'
-                    '.substr(htmlspecialchars($s['dateSinistre']), 0, 4).'
+                    '.substr($s['dateSinistre'], 8, 8).'
+                    '.substr($s['dateSinistre'], 4, 4).'
+                    '.substr($s['dateSinistre'], 0, 4).'
                     :</u> '.htmlspecialchars($s['typeSinistre']).' 
                     <i>[ '.htmlspecialchars($s['immatriculation']).' ]</i>
                     </h3></div>';
