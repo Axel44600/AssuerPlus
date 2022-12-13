@@ -49,7 +49,9 @@ $extensions_autorisees = array('pdf');
                     'numClient' => 0,
                     'nom' => 'ADMIN',
                     'prenom' => 'ADMIN',
-                    'msg' => 'Votre sinistre a bien été déclaré ! Je vous transmets les coordonnées d\'un garage partenaire à proximité ainsi que d\'une dépanneuse :',
+                    'msg' => 'Votre sinistre a bien été déclaré ! Je vous transmets les coordonnées d\'un garage partenaire à proximité ainsi que d\'une dépanneuse :<br>
+                    <u>Garage MIDAS :</u> <a href="tel:+33240901340"><b>02 40 90 13 40</b></a><br>
+                    <u>Dépanneuse :</u> <a href="tel:+33240622216"><b>02 40 62 22 16</b></a>',
                     'destinataire' => $user['numClient'],
                 ]);
             } elseif($_POST['type'] == "Bris de glace") {
@@ -59,7 +61,8 @@ $extensions_autorisees = array('pdf');
                     'numClient' => 0,
                     'nom' => 'ADMIN',
                     'prenom' => 'ADMIN',
-                    'msg' => 'Votre sinistre a bien été déclaré ! Je vous transmets les coordonnées d\'un garage partenaire à proximité :',
+                    'msg' => 'Votre sinistre a bien été déclaré ! Je vous transmets les coordonnées d\'un garage partenaire à proximité :<br>
+                    <u>Garage MIDAS :</u> <a href="tel:+33240901340"><b>02 40 90 13 40</b></a>',
                     'destinataire' => $user['numClient'],
                 ]);
             } else {

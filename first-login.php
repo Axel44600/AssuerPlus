@@ -104,10 +104,9 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     }
 
     if (!$errors) {
-        $token = generate_token(32);
         $insert = $bdd->prepare('
-                INSERT INTO clients(numClient, email, nom, prenom, password, ip, tel, bonus, malus, confirmation_token, confirmation_token_sent_at)
-                VALUES(:numClient, :email, :nom, :prenom, :pass, :ip, :tel, :bonus, :malus, :confirmation_token, NOW())');
+                INSERT INTO clients(numClient, email, nom, prenom, password, ip, tel, bonus, malus, rang)
+                VALUES(:numClient, :email, :nom, :prenom, :pass, :ip, :tel, :bonus, :malus, :rang)');
         $insert->execute([
             'numClient' => $numClient,
             'email' => $_POST['email'],
@@ -118,12 +117,11 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
             'tel' => $_POST['tel'],
             'bonus' => 100,
             'malus' => 0,
-            'confirmation_token' => $token,
+            'rang' => 0,
         ]);
 
-        # Envoi du mail de confirmation
-        send_mail_confirmation($_POST['email'], $_POST['nom'], $token);
-        header('Location: home.php');
+        echo"<script>alert('Inscription réussie ! Vous pouvez désormais vous connecter sur votre espace personnel');</script>";
+        header( "refresh:0;url=./login.php");
         exit;
     }
 }
@@ -172,13 +170,13 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
             <a onclick="newUser()" href="#" class="answer" id="no">Non</a>
 
             <div class="first-contain">
-                <form action="#">
+                
                     <label for="numS">Votre numéro de souscripteur</label><br>
                     <input type="text" name="nOrMail" id="numS" required><br>
                     <label for="mail">Votre email</label><br>
                     <input type="email" id="mail" name="mail" required><br>
-                    <input type="submit" value="Valider">
-                </form>
+                    <input type="submit" style="opacity: 0.7;" value="Indisponible..." disabled> 
+            
             </div>
 
 

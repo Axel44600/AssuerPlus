@@ -82,7 +82,7 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
                     if($m['numClient'] == $user['numClient']) {
                         echo '<div class="answer"><b><u>Moi :</u> <small><i> ['.substr($m['dateMsg'], 8, 8).''.substr($m['dateMsg'], 4, 4).''.substr($m['dateMsg'], 0, 4).']</small></i></b> <p>'.htmlspecialchars($m['msg']).'</p></div>';
                     } elseif($m['numClient'] == 0 && $m['destinataire'] == $user['numClient']) {
-                        echo '<div class="msg"><b><u>Assistant '.$sitename.' :</u><small><i> ['.substr($m['dateMsg'], 8, 8).''.substr($m['dateMsg'], 4, 4).''.substr($m['dateMsg'], 0, 4).']</small></i></b><p>'.htmlspecialchars($m['msg']).'</p></div>';
+                        echo '<div class="msg"><b><u>Assistant '.$sitename.' :</u><small><i> ['.substr($m['dateMsg'], 8, 8).''.substr($m['dateMsg'], 4, 4).''.substr($m['dateMsg'], 0, 4).']</small></i></b><p>'.$m['msg'].'</p></div>';
                     }
                 }   
              }
@@ -108,7 +108,9 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
 <section id="two">
     <div class="sinistre">
         <span class="title">Déclarer un sinistre</span>
-    
+    <?php if($user['adresse'] == '') {
+        echo'<div style="margin-top: 100px; width: 80%; min-height: 50px; word-break: break-word; text-align: center;">Veuillez compléter votre profil dans l\'onglet <b>"Mes Coordonnées"</b> afin de pouvoir déclarer un sinistre.</div>';
+    } else { ?>
         <form action="" method="post" enctype="multipart/form-data">
             <div style="text-align: left; display: inline-block; width: 45%;">
                 <label for="immac">N° d'immatriculation</label>
@@ -146,7 +148,7 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
         </form>
-
+        <?php } ?>
     </div>
 
 
@@ -199,8 +201,8 @@ $sinistre = $sts->fetchAll(PDO::FETCH_ASSOC);
         <form action="./templates/param.php" method="post">
 
             <div style="text-align: left; display: inline-block; width: 50%;">
-                <label for="adresse">Adresse</label><br>
-                <input type="text" style="width: 90%;" id="adresse" name="adresse" value="<?= htmlspecialchars($user['adresse'], ENT_NOQUOTES) ?>" maxlength="30" required>
+                <label for="adresse">Adresse complète</label><br>
+                <input type="text" style="width: 90%;" id="adresse" name="adresse" value="<?= htmlspecialchars($user['adresse'], ENT_NOQUOTES) ?>" placeholder="ex: Château Beauregard, Rue Du, 44600 Saint-Nazaire-d'Aude" maxlength="30" required>
              </div>
 
             <div style="text-align: left; display: inline-block; width: 45%;">

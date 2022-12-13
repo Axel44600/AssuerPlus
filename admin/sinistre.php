@@ -85,7 +85,7 @@ if($user['rang'] < 1) {
                                         	<td><?php echo ($s['details']); ?></td>
                                             <td>
                                                 <?php 
-                                                if($s['documents'] > 1){
+                                                if($s['documents'] > 0){
                                                     for($i = 0; $i < $s['documents']; $i++) { ?>
                                                 <a target="_blank" href="../uploads/<?php echo ($s['numClient']); ?>_<?php echo ($s['immatriculation']); ?>_<?php echo ($s['dateSinistre']); ?>_DOC_<?php echo ($i); ?>.pdf">Document <?php echo ($i); ?> | </a>
                                                 <?php }} ?>
@@ -132,7 +132,7 @@ if($user['rang'] < 1) {
                                         	<td><?php echo ($s['details']); ?></td>
                                             <td>
                                                 <?php 
-                                                if($s['documents'] > 1){
+                                                if($s['documents'] > 0){
                                                     for($i = 0; $i < $s['documents']; $i++) { ?>
                                                 <a target="_blank" href="../uploads/<?php echo ($s['numClient']); ?>_<?php echo ($s['immatriculation']); ?>_<?php echo ($s['dateSinistre']); ?>_DOC_<?php echo ($i); ?>.pdf">Document <?php echo ($i); ?> |</a>
                                                 <?php }} ?>
@@ -179,7 +179,7 @@ if($user['rang'] < 1) {
                                         	<td><?php echo ($s['details']); ?></td>
                                             <td>
                                                 <?php 
-                                                if($s['documents'] > 1){
+                                                if($s['documents'] > 0){
                                                     for($i = 0; $i < $s['documents']; $i++) { ?>
                                                 <a target="_blank" href="../uploads/<?php echo ($s['numClient']); ?>_<?php echo ($s['immatriculation']); ?>_<?php echo ($s['dateSinistre']); ?>_DOC_<?php echo ($i); ?>.pdf">Document <?php echo ($i); ?> |</a>
                                                 <?php }} ?>
@@ -225,7 +225,7 @@ if($user['rang'] < 1) {
                                         	<td><?php echo ($s['details']); ?></td>
                                             <td>
                                                 <?php 
-                                                if($s['documents'] > 1){
+                                                if($s['documents'] > 0){
                                                     for($i = 0; $i < $s['documents']; $i++) { ?>
                                                 <a target="_blank" href="../uploads/<?php echo ($s['numClient']); ?>_<?php echo ($s['immatriculation']); ?>_<?php echo ($s['dateSinistre']); ?>_DOC_<?php echo ($i); ?>.pdf">Document <?php echo ($i); ?> |</a>
                                                 <?php }} ?>
@@ -260,9 +260,6 @@ if($user['rang'] < 1) {
 
     <!--  Notifications Plugin    -->
     <script src="assets/js/bootstrap-notify.js"></script>
-
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>

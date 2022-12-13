@@ -100,11 +100,14 @@ $lGarage = $stg->fetchAll(PDO::FETCH_ASSOC);
                         <div class="content all-icons">
                 <?php
                  if ('POST' == $_SERVER['REQUEST_METHOD']) {
-                    $insert = $bdd->prepare('INSERT INTO garage(nom, adresse, tel) 
-                    VALUES(:nom, :adresse, :tel)');
+                    $exploded_string = explode(' ', $_POST['adresse']); 
+
+                    $insert = $bdd->prepare('INSERT INTO garage(nom, adresse, ville, tel) 
+                    VALUES(:nom, :adresse, :ville, :tel)');
                     $insert->execute([
                         'nom' => $_POST['nom'],
                         'adresse' => $_POST['adresse'],
+                        'ville' => array_pop($exploded_string),
                         'tel' => $_POST['tel'],
                     ]);
                  }
