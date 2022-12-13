@@ -54,11 +54,12 @@ header.head {
     font-size: 1.2rem;
 }
 
-/* MOBILE */
+/* Mobile */
 
 @media only screen and (max-width: 375px) {
     header.head {
         background-color : #5e992b;
+        min-height: 260px;
     }
 
     .head .head-left .logo {
@@ -82,6 +83,7 @@ header.head {
 @media only screen and (min-width: 376px) and (max-width: 425px) {
     header.head {
         background-color : #5e992b;
+        min-height: 260px;
     }
 
     .head .head-left .logo {
@@ -102,8 +104,12 @@ header.head {
     }
 }
 
-
+            /* Tablet & Laptop */
 @media only screen and (max-width: 1300px) {
+
+    header.head {
+      min-height: 260px;
+    }
 
     .head .head-right li {
         border: none;
@@ -199,7 +205,7 @@ header.head {
   }
 
 
-  /* LAPTOP */
+          /* Computer*/
 @media only screen and (min-width: 1301px) 
 {
   .head-right input[type="checkbox"] {

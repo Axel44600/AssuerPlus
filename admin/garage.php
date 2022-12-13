@@ -4,7 +4,7 @@ require '../settings/config.php';
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 
@@ -12,6 +12,15 @@ $stmt = $bdd->prepare('SELECT * FROM clients WHERE id = :id');
 $stmt->bindParam('id', $_SESSION['id'], PDO::PARAM_INT);
 $stmt->execute();
 $user = $stmt->fetch();
+
+if($user['rang'] < 1) {
+    header('Location: ../home.php');
+    exit;
+}
+
+$stg = $bdd->prepare('SELECT * FROM garage');
+$stg->execute();
+$lGarage = $stg->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <html lang="en">
@@ -55,18 +64,24 @@ $user = $stmt->fetch();
                             <div class="header">
                                 <h4 class="title">Nos garages partenaires</h4>
                             </div>
+                        
                             <div class="content all-icons">
                                 <div class="row">
                                   
                                   <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                                  <?php foreach ($lGarage as $g){ ?>
                                     <div class="font-icon-detail"><i class="pe-7s-car"></i>
-                                      <p>MIDAS</p>
-                                      <small>Trignac - 44600</small><br>
-                                      <small>02 40 90 13 40</small>
+                                      <p><?php echo(htmlspecialchars($g['nom'])); ?></p>
+                                      <small><?php echo(htmlspecialchars($g['adresse'])); ?></small><br>
+                                      <small><?php echo(htmlspecialchars($g['tel'])); ?></small>
                                     </div>
+                                    <?php } ?>
                                   </div>              
                                 </div>
                             </div>
+                       
+
+
                         </div>
                     </div>
 
@@ -83,6 +98,17 @@ $user = $stmt->fetch();
                           <h4 class="title">Ajouter un garage</h4>
                         </div>
                         <div class="content all-icons">
+                <?php
+                 if ('POST' == $_SERVER['REQUEST_METHOD']) {
+                    $insert = $bdd->prepare('INSERT INTO garage(nom, adresse, tel) 
+                    VALUES(:nom, :adresse, :tel)');
+                    $insert->execute([
+                        'nom' => $_POST['nom'],
+                        'adresse' => $_POST['adresse'],
+                        'tel' => $_POST['tel'],
+                    ]);
+                 }
+                ?>
                           <form action="" method="post">
                                     <div class="row">
                                         <div class="col-md-3">
@@ -100,26 +126,19 @@ $user = $stmt->fetch();
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>N° de téléphone</label>
-                                                <input type="text" name="tel" class="form-control" placeholder="Numéro de téléphone du garage" required>
+                                                <input type="text" name="tel" class="form-control" placeholder="Numéro de téléphone du garage" minlength="10" maxlength="10" required>
                                             </div>
                                             <button type="submit" class="btn btn-info btn-fill pull-right">Ajouter</button>
                                         </div>
-                        
                                 </div>
-                          
                            </form>
+                           <a href=""><button class="btn btn-info btn-fill push-left">Actualiser</button></a>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-
-
-
-        
-
-
 
     </div>
 </div>
@@ -136,10 +155,6 @@ $user = $stmt->fetch();
 
     <!--  Notifications Plugin    -->
     <script src="assets/js/bootstrap-notify.js"></script>
-
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js?v=1.4.0"></script>
 

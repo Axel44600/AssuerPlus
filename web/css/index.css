@@ -8,7 +8,7 @@ section.one_box {
     .one_box .bg {
         width: 100%; 
         min-height: 60vh;
-        background-image: url(/AssuerPlus/web/img/banniere.png);
+        background-image: url(../img/banniere.png);
         background-size: cover;
     }
 
@@ -40,7 +40,7 @@ section.one_box {
                 width: 55px;
                 box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.639);
                 border-radius: 50%;
-                background-image: url(/AssuerPlus/web/img/icon_voiture.png);
+                background-image: url(../img/icon_voiture.png);
                 margin: auto auto 10% auto;
             }
 
@@ -49,7 +49,7 @@ section.one_box {
                 width: 55px;
                 box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.639);
                 border-radius: 50%;
-                background-image: url(/AssuerPlus/web/img/icon_sinistre.png);
+                background-image: url(../img/icon_sinistre.png);
                 margin: auto auto 10% auto;
             }
 
@@ -58,7 +58,7 @@ section.one_box {
                 width: 55px;
                 box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.639);
                 border-radius: 50%;
-                background-image: url(/AssuerPlus/web/img/icon_assurance.png);
+                background-image: url(../img/icon_assurance.png);
                 margin: auto auto 10% auto;
             }
 
@@ -93,6 +93,11 @@ section.two_box {
     text-align: center;
 }
 
+section.two_box #help {
+    display: flex; 
+    flex-wrap: wrap;
+}
+
     .two_box h1 {
         font-size: 2rem;
         letter-spacing: 2px;
@@ -118,7 +123,7 @@ section.two_box {
         border-radius: 10px; 
         width: 80%; 
         height: 950px; 
-        background-image: url(https://www.cirraplus.com/wp-content/uploads/2022/02/france-carte-3dMAJ160222.png);
+        background-image: url(../img/map.png);
     }
 
     .help {
@@ -133,10 +138,31 @@ section.two_box {
         text-align: center;
     }
 
+        .help-contact span {
+            text-align: center;
+        }
+
     .pictures {
         width: 800px; 
         height: 500px;
     }
+
+        .pictures .first {
+            background-image: url(../img/first-contact-picture.png); 
+            margin-top: 30px;
+            margin-bottom: 20px; 
+            border-radius: 10px 10px 0px 0px; 
+            width: 80%; 
+            height: 200px;
+        }
+
+        .pictures .second {
+            background-image: url(../img/second-contact-picture.png); 
+            border-radius: 0px 0px 10px 10px; 
+            background-size: cover; 
+            width: 80%; 
+            height: 200px;
+        }
 
 
 

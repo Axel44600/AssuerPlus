@@ -121,7 +121,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
             'confirmation_token' => $token,
         ]);
 
-        # envoi du mail de confirmation
+        # Envoi du mail de confirmation
         send_mail_confirmation($_POST['email'], $_POST['nom'], $token);
         header('Location: home.php');
         exit;
@@ -162,14 +162,14 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     </div>
     <?php endif ?>
 
-    <div class="forgot-pass" style="padding-bottom: 60px;">
+    <div class="forgot-pass">
         <div class="pass">
             <h1>Demande de mot de passe</h1>
 
             <div class="form">
             <label for="">Vous êtes assuré au près du groupe <?php echo($sitename); ?></label><br>
             <a onclick="newPass()" class="answer" id="yes" href="#">Oui</a>
-            <a onclick="newUser()" href="#" class="answer" id="no" style="background-color: #fff; color: #1E1E1E; border: 1px solid #1E1E1E;">Non</a>
+            <a onclick="newUser()" href="#" class="answer" id="no">Non</a>
 
             <div class="first-contain">
                 <form action="#">
@@ -182,7 +182,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
             </div>
 
 
-            <div class="second-contain" style="display: none;">
+            <div class="second-contain">
                 <form action="" method="post">
                     <label for="mail">Votre email</label><br>
                     <input type="email" name="email" id="mail" required><br>
@@ -228,13 +228,13 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
         <div class="map"></div>
 </section>
 
-<section class="two_box" id="help" style="display: flex; flex-wrap: wrap;">
+<section class="two_box" id="help">
     <div class="help">
             <div class="help-contact">
                 <h1>Assistance</h1>
                 <hr>
                 <br>
-                <span style="text-align: center;">
+                <span>
                     <b>Une urgence ? Assistance 24 h/24, 7 j/7 </b>
                 <br><br>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae rem consequuntur, magni quos possimus aspernatur esse quidem odit hic, adipisci tempora ipsam. Vero repellat eveniet dicta tempore, recusandae nesciunt a ut minus beatae, assumenda nisi autem? Consectetur non nemo unde alias quae rerum quis minima ipsum molestias quaerat, ratione recusandae vitae illo dicta inventore labore atque? Facilis reiciendis corporis nobis eligendi possimus ducimus autem aliquam consequuntur tenetur! Ipsam sequi quas doloremque, blanditiis quisquam delectus repudiandae sed id, tempore inventore ab similique modi doloribus? Provident ipsa totam, pariatur vel nisi cum autem, laboriosam est, nam quasi voluptate corporis vitae velit odio?</p>
@@ -243,8 +243,8 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
               
             </div>
             <div class="pictures">
-                <div style="background-image: url(./web/img/first-contact-picture.png); margin-bottom: 20px; border-radius: 10px 10px 0px 0px; width: 80%; height: 200px;"></div>
-                <div style="background-image: url(./web/img/second-contact-picture.png); border-radius: 0px 0px 10px 10px; background-size: cover; width: 80%; height: 200px;"></div>
+                <div class="first"></div>
+                <div class="second"></div>
             </div>
     </div>
     

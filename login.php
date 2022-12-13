@@ -5,7 +5,6 @@ session_start();
 
 $fail = FALSE;
 if ('POST' == $_SERVER['REQUEST_METHOD']) {
-
     $stmt = $bdd->prepare('SELECT * FROM clients WHERE email = :numOrEmail OR numClient = :numOrEmail');
     $stmt->execute(['numOrEmail' => $_POST['numOrEmail']]);
 
@@ -53,21 +52,20 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     <div class="bg1">
     <div class="login">
         <div class="login-form">
-            <h1 style="overflow: hidden;">Accéder à mon espace personnel</h1>
+            <h1>Accéder à mon espace personnel</h1>
 
 <?php if ($fail): ?>
-<p style="margin-top: 10px; width: 80%; display: block; padding: 10px; border-radius: 8px; background-color: #df3b3b; color: #FFF;">N° de souscripteur / email ou mot de passe incorrect.</p>
+<p class="error">N° de souscripteur / email ou mot de passe incorrect.</p>
 <?php endif ?>
 
             <form action="" method="post">
-            <label for="mail">N° de souscripteur / email</label><br>
-            <input type="text" placeholder="ex: 56444392829..." name="numOrEmail" id="mail" minlength="3" pattern="[A-Za-z-@-.--]" required><br>
-            <label for="password">Mot de passe</label><br>
-            <input type="password" placeholder="*********" type="password" id="password" name="pass" required><br>
-            <small><a href="./first-login.php">1ère connexion / Mot de passe oublié ?</a></small>
-            <input type="submit" value="Se connecter">
+                <label for="mail">N° de souscripteur / email</label><br>
+                <input type="text" placeholder="ex: 56444392829..." name="numOrEmail" id="mail" minlength="3" pattern="[A-Za-z-@-.--]" required><br>
+                <label for="password">Mot de passe</label><br>
+                <input type="password" placeholder="*********" type="password" id="password" name="pass" required><br>
+                <small><a href="./first-login.php">1ère connexion / Mot de passe oublié ?</a></small>
+                <input type="submit" value="Se connecter">
             </form>
-
         </div>
     </div>
     </div>
@@ -90,13 +88,13 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
         <div class="map"></div>
 </section>
 
-<section class="two_box" id="help" style="display: flex; flex-wrap: wrap;">
+<section class="two_box" id="help">
     <div class="help">
             <div class="help-contact">
                 <h1>Assistance</h1>
                 <hr>
                 <br>
-                <span style="text-align: center;">
+                <span>
                     <b>Une urgence ? Assistance 24 h/24, 7 j/7 </b>
                 <br><br>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae rem consequuntur, magni quos possimus aspernatur esse quidem odit hic, adipisci tempora ipsam. Vero repellat eveniet dicta tempore, recusandae nesciunt a ut minus beatae, assumenda nisi autem? Consectetur non nemo unde alias quae rerum quis minima ipsum molestias quaerat, ratione recusandae vitae illo dicta inventore labore atque? Facilis reiciendis corporis nobis eligendi possimus ducimus autem aliquam consequuntur tenetur! Ipsam sequi quas doloremque, blanditiis quisquam delectus repudiandae sed id, tempore inventore ab similique modi doloribus? Provident ipsa totam, pariatur vel nisi cum autem, laboriosam est, nam quasi voluptate corporis vitae velit odio?</p>
@@ -105,8 +103,8 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
               
             </div>
             <div class="pictures">
-                <div style="background-image: url(./web/img/first-contact-picture.png); margin-bottom: 20px; border-radius: 10px 10px 0px 0px; width: 80%; height: 200px;"></div>
-                <div style="background-image: url(./web/img/second-contact-picture.png); border-radius: 0px 0px 10px 10px; background-size: cover; width: 80%; height: 200px;"></div>
+                <div class="first"></div>
+                <div class="second"></div>
             </div>
     </div>
     

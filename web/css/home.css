@@ -1,62 +1,69 @@
-.right {
-    width: 650px; 
-    text-align: center;
-}
-
-    .right h1 {
-        color: #FFF; 
-        text-transform: uppercase;
+    .right {
+        width: 650px; 
+        text-align: center;
     }
 
-    .right p {
-        font-size: 20px;
-    }
-
-    .right ul {
-        display: flex; 
-        flex-wrap: wrap; 
-        padding: 0; 
-        margin: 10px;
-    }
-
-        ul .bc1 {
-            border-radius: 4px 0px 0px 4px; 
-            width: 33.3%; 
-            border-top: 2px solid #5e992b; 
-            height: 30px; 
-            background-color: #5e992b;
-        }
-
-        ul .bc2 {
-            width: 33.3%; 
-            transition-duration: 1s;
+        .right h1 {
             color: #FFF; 
-            line-height: 28px; 
-            border-top: 1px solid #5e992b; 
-            border-bottom: 1px solid #5e992b; 
-            height: 30px;
-            cursor: pointer;
+            text-transform: uppercase;
         }
 
-        ul .bc2:hover {
-            width: 33.3%; 
-            transition-duration: 1s;
-            color: #FFF; 
-            line-height: 28px; 
-            background-color: #5e992b;
-            border-top: 1px solid #5e992b; 
-            border-bottom: 1px solid #5e992b; 
-            height: 30px;
-            cursor: pointer;
+        .right p {
+            font-size: 20px;
         }
 
-        ul .bc3 {
-            border-radius: 0px 4px 4px 0px; 
-            width: 33.3%; 
-            border-top: 2px solid #5e992b; 
-            height: 30px; 
-            background-color: #5e992b;
+        .right ul {
+            display: flex; 
+            flex-wrap: wrap; 
+            padding: 0; 
+            margin: 10px;
         }
+
+            ul .bc1 {
+                border-radius: 4px 0px 0px 4px; 
+                width: 33.3%; 
+                border-top: 2px solid #5e992b; 
+                height: 30px; 
+                background-color: #5e992b;
+            }
+
+            ul .bc2 {
+                width: 33.3%; 
+                transition-duration: 1s;
+                color: #FFF; 
+                line-height: 28px; 
+                border-top: 1px solid #5e992b; 
+                border-bottom: 1px solid #5e992b; 
+                height: 30px;
+                cursor: pointer;
+            }
+
+            ul .bc2#admin {
+                border-radius: 4px 0px 0px 4px; 
+                background-color: #df3b3b; 
+                border-bottom: 1px solid #df3b3b; 
+                border-top: 1px solid #df3b3b;
+            }
+
+            ul .bc2:hover {
+                width: 33.3%; 
+                transition-duration: 1s;
+                color: #FFF; 
+                line-height: 28px; 
+                background-color: #5e992b;
+                border-top: 1px solid #5e992b; 
+                border-bottom: 1px solid #5e992b; 
+                height: 30px;
+                cursor: pointer;
+            }
+
+            ul .bc3 {
+                border-radius: 0px 4px 4px 0px; 
+                width: 33.3%; 
+                border-top: 2px solid #5e992b; 
+                height: 30px; 
+                background-color: #5e992b;
+            }
 
 section {
     width: 100%;
@@ -87,6 +94,11 @@ section {
         background-color: #1E1E1E;
     }
 
+        #scoll {
+            overflow-y:scroll; 
+            height: 200px;
+        }
+
         .messagerie .contain {
             display: flex; 
             flex-wrap: wrap; 
@@ -103,6 +115,8 @@ section {
                 padding: 10px; 
                 float: left; 
                 margin: 10px;
+                max-width: 300px;  
+                word-wrap: break-word;
             }
 
             .contain .answer {
@@ -110,7 +124,10 @@ section {
                 margin-top: 10px;
                 background-color: #5e992b; 
                 color: #FFF;;
-                border-radius: 10px; padding: 10px;
+                border-radius: 10px; 
+                padding: 10px;
+                max-width: 300px;  
+                word-wrap: break-word;
             }
 
         .messagerie form {
@@ -144,8 +161,17 @@ section {
         margin: 0; 
         width: 800px; 
         height: 300px; 
-        background-color: #FFF;
+        background-color: transparent; 
+        opacity: 0.7;
     }
+        
+        section .contrats .bgC {
+            background-position: center; 
+            width: 100%; 
+            height: 300px; 
+            background-size: cover; 
+            background-image: url(../img/bgA.png);
+        }
 
         section .contrats .title {
             background-color: #1E1E1E;
@@ -160,6 +186,12 @@ section {
             height: 300px; 
             background-color: #FFF;
     }
+
+        .sinistre .title {
+            background-color: #1E1E1E; 
+            color: #FFF; 
+            border-top: 2px solid #eee;
+        }
 
         .sinistre form {
             padding: 10px; 
@@ -247,6 +279,12 @@ section {
         background-color: #FFF;
     }
 
+        .picture .title {
+            background-color: #1E1E1E; 
+            color: #FFF; 
+            border-top: 2px solid #eee;
+        }
+
         .picture p {
             margin: auto;
             background-color: #FFF;
@@ -260,7 +298,8 @@ section {
             width: 100%; 
             background-size: cover; 
             height: 300px; 
-            background-image: url(/AssuerPlus/web/img/picture-accident.png);
+            text-align: center;
+            background-image: url(../img/picture-accident.png);
         }
 
     section .my-sinistre {
@@ -271,42 +310,49 @@ section {
         background-color: #FFF;
     }
 
-    .my-sinistre .malus {
-        font-size: 20px; 
-        text-align: center;
-        width: 40%; 
-        background-color: #df3b3b; 
-        color: #FFF; 
-        line-height: 48px; 
-        height: 50px; 
-        border-radius: 0px 0px 4px 4px;
-    }
+        .my-sinistre .title {
+            border-bottom: 2px solid #1E1E1E; 
+            background-color: #1E1E1E; 
+            color: #FFF; 
+            border-top: 2px solid #eee;
+        }
 
-    .my-sinistre .bonus {
-        font-size: 20px; 
-        text-align: center; 
-        width: 40%; 
-        background-color: #5e992b; 
-        color: #FFF; 
-        line-height: 48px; 
-        height: 50px; 
-        border-radius: 0px 0px 4px 4px;
-    }
+        .my-sinistre .malus {
+            font-size: 20px; 
+            text-align: center;
+            width: 40%; 
+            background-color: #df3b3b; 
+            color: #FFF; 
+            line-height: 48px; 
+            height: 50px; 
+            border-radius: 0px 0px 4px 4px;
+        }
 
-    .my-sinistre .list-sinistre {
-        text-shadow: 2px 2px 4px #FFF; 
-        color: #1E1E1E; 
-        padding: 0px 5px 0px 20px; 
-        margin-top: 10px; 
-        margin-bottom: 10px; 
-        background-color: #EEE; 
-        text-underline-offset: 6px;
-        word-wrap: break-word;
-        width: 90%; 
-        line-height: 45px; 
-        min-height: 50px; 
-        border-radius: 10px;
-    }
+        .my-sinistre .bonus {
+            font-size: 20px; 
+            text-align: center; 
+            width: 40%; 
+            background-color: #5e992b; 
+            color: #FFF; 
+            line-height: 48px; 
+            height: 50px; 
+            border-radius: 0px 0px 4px 4px;
+        }
+
+        .my-sinistre .list-sinistre {
+            text-shadow: 2px 2px 4px #FFF; 
+            color: #1E1E1E; 
+            padding: 0px 5px 0px 20px; 
+            margin-top: 10px; 
+            margin-bottom: 10px; 
+            background-color: #EEE; 
+            text-underline-offset: 6px;
+            word-wrap: break-word;
+            width: 90%; 
+            line-height: 45px; 
+            min-height: 50px; 
+            border-radius: 10px;
+        }
 
     section .profil {
         margin: 0; 
@@ -316,6 +362,12 @@ section {
         background-color: #1E1E1E; 
         border-left: 2px solid #eee;
     }
+
+        .profil .title {
+            border-bottom: 2px solid #eee; 
+            background-color: #FFF; 
+            color: #1E1E1E;
+        }
 
         .profil form {
             text-align: left; 

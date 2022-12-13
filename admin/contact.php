@@ -4,7 +4,7 @@ require '../settings/config.php';
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 
@@ -12,6 +12,11 @@ $stmt = $bdd->prepare('SELECT * FROM clients WHERE id = :id');
 $stmt->bindParam('id', $_SESSION['id'], PDO::PARAM_INT);
 $stmt->execute();
 $user = $stmt->fetch();
+
+if($user['rang'] < 1) {
+    header('Location: ../home.php');
+    exit;
+}
 
 if (isset($_GET['delete'])) {
     if($_GET['delete'] !== ''){

@@ -28,26 +28,26 @@ $user = $stmt->fetch();
     <title>Mon espace personnel - <?php echo($sitename); ?></title>
     <script type="text/javascript">
         function scrollToBottom() {
-            const el = document.getElementById("test");
+            const el = document.getElementById("scoll");
             el.scrollTop = el.scrollHeight;
         }
     </script>
 </head>
 <body onload="scrollToBottom()">
 
-<header class="head" style="max-height: 800px;">
-    <div class="head-left" style="margin-bottom: 15px;">
+<!-- HEADER -->
+<header class="head">
+    <div class="head-left">
         <span class="logo"><?php echo($sitename); ?></span>
         <div class="slogan">Le spécialiste de l'assurance auto depuis 20 ans !</div>
     </div>
 
 
     <div class="right">
-        <h1><b><?= htmlspecialchars($user['prenom'], ENT_NOQUOTES) ?> <?= htmlspecialchars($user['nom'], ENT_NOQUOTES) ?>
-        : </b><br> <p>mon espace personnel</p></h1>
+        <h1><b><?= htmlspecialchars($user['prenom'], ENT_NOQUOTES) ?> <?= htmlspecialchars($user['nom'], ENT_NOQUOTES) ?>: </b><br> <p>mon espace personnel</p></h1>
         <ul>
             <?php if($user['rang'] > 0) { ?>
-           <div onclick="window.location.href = './admin/dashboard.php'" class="bc2" style="border-radius: 4px 0px 0px 4px; background-color: #df3b3b; border-bottom: 1px solid #df3b3b; border-top: 1px solid #df3b3b;">Administration</div>
+           <div onclick="window.location.href = './admin/dashboard.php'" class="bc2" id="admin">Administration</div>
             <?php } else { ?>
            <div class="bc1"></div>
            <?php } ?>
@@ -67,7 +67,7 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
     <div class="messagerie">
         <span class="title">Messagerie</span>
 
-    <div id="test" style="overflow-y:scroll; height: 200px;" onscroll="scollPos();">
+    <div id="scoll" onscroll="scollPos();">
         <div class="contain">
             <div class="msg">
                 <u><b>Assistant <?php echo($sitename); ?> :</b></u><br>
@@ -80,19 +80,10 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
             } else {
                 foreach ($message as $m){
                     if($m['numClient'] == $user['numClient']) {
-                        echo '<div class="answer" style="max-width: 300px;  word-wrap:break-word;">
-                        <b><u>Moi :</u> <small><i> ['.substr($m['dateMsg'], 8, 8).'
-                    '.substr($m['dateMsg'], 4, 4).'
-                    '.substr($m['dateMsg'], 0, 4).']</small></i></b> <p>'.htmlspecialchars($m['msg']).'</p></div> ';
-
+                        echo '<div class="answer"><b><u>Moi :</u> <small><i> ['.substr($m['dateMsg'], 8, 8).''.substr($m['dateMsg'], 4, 4).''.substr($m['dateMsg'], 0, 4).']</small></i></b> <p>'.htmlspecialchars($m['msg']).'</p></div>';
                     } elseif($m['numClient'] == 0 && $m['destinataire'] == $user['numClient']) {
-                        echo '<div class="msg" style="max-width: 300px;  word-wrap:break-word;">
-                        <b><u>Assistant '.$sitename.' :</u><small><i> ['.substr($m['dateMsg'], 8, 8).'
-                    '.substr($m['dateMsg'], 4, 4).'
-                    '.substr($m['dateMsg'], 0, 4).']</small></i></b> 
-                        <p>'.htmlspecialchars($m['msg']).'</p></div> ';
+                        echo '<div class="msg"><b><u>Assistant '.$sitename.' :</u><small><i> ['.substr($m['dateMsg'], 8, 8).''.substr($m['dateMsg'], 4, 4).''.substr($m['dateMsg'], 0, 4).']</small></i></b><p>'.htmlspecialchars($m['msg']).'</p></div>';
                     }
-                
                 }   
              }
             ?>
@@ -106,8 +97,8 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     
-    <div class="contrats" style="background-color: transparent; opacity: 0.7;">
-        <div style="background-position: center; width: 100%; height: 300px; background-size: cover; background-image: url('https://img-4.linternaute.com/JpFhmYdrX5SU-sHaq7FN-fdunN8=/1500x/smart/0ab273536fee4e74b6948ad52bbdad2f/ccmcms-linternaute/25016915.jpg');">
+    <div class="contrats">
+        <div class="bgC">
         </div>
     </div>
 </section>
@@ -116,7 +107,7 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 <section id="two">
     <div class="sinistre">
-        <span class="title" style="background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;">Déclarer un sinistre</span>
+        <span class="title">Déclarer un sinistre</span>
     
         <form action="" method="post" enctype="multipart/form-data">
             <div style="text-align: left; display: inline-block; width: 45%;">
@@ -160,8 +151,8 @@ $message = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 
     <div class="picture">
-        <span class="title" style="background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;"></span>
-        <div class="picture_accident" style="text-align: center;">
+        <span class="title"></span>
+        <div class="picture_accident">
             <div style="height: 100%; letter-spacing: 1px; padding: 10px; color: #FFF; text-shadow: 2px 2px 4px #1E1E1E; background-color: rgba(0, 0, 0, 0.366)">
             <p><b>Décrire le siniste en détails : </b>
                 <br> Préciser les éléments suivants : lieu, date et heure du sinistre, circonstances, dégâts occasionnés, éventuelles difficultés rencontrées lors de la rédaction du constat amiable avec un tiers (autre conducteur, piéton, témoin, etc.), lieu où se trouve le véhicule pour le passage de l’expert.</p>
@@ -184,7 +175,7 @@ $sinistre = $sts->fetchAll(PDO::FETCH_ASSOC);
 
 <section id="three">
     <div class="my-sinistre">
-        <span style="border-bottom: 2px solid #1E1E1E; background-color: #1E1E1E; color: #FFF; border-top: 2px solid #eee;" class="title">Mes sinistres</span>
+        <span class="title">Mes sinistres</span>
         
         <div style="display: flex;">
           <div class="bonus">BONUS : <b><?= htmlspecialchars($user['bonus'], ENT_NOQUOTES) ?>%</b></div>
@@ -193,24 +184,17 @@ $sinistre = $sts->fetchAll(PDO::FETCH_ASSOC);
 
         <?php 
             if(empty($sinistre)){ 
-               
+               #
             } else {
                 foreach ($sinistre as $s){
-                    echo '<div class="list-sinistre">
-                    <h3><u>Sinistre du 
-                    '.substr($s['dateSinistre'], 8, 8).'
-                    '.substr($s['dateSinistre'], 4, 4).'
-                    '.substr($s['dateSinistre'], 0, 4).'
-                    :</u> '.htmlspecialchars($s['typeSinistre']).' 
-                    <i>[ '.htmlspecialchars($s['immatriculation']).' ]</i>
-                    </h3></div>';
+                    echo '<div class="list-sinistre"><h3><u>Sinistre du '.substr($s['dateSinistre'], 8, 8).''.substr($s['dateSinistre'], 4, 4).''.substr($s['dateSinistre'], 0, 4).':</u> '.htmlspecialchars($s['typeSinistre']).' <i>[ '.htmlspecialchars($s['immatriculation']).' ]</i></h3></div>';
                 }   
              }
         ?>
     </div>
 
     <div class="profil">
-        <span class="title" style="border-bottom: 2px solid #eee; background-color: #FFF; color: #1E1E1E;">Mes coordonnées</span>
+        <span class="title">Mes coordonnées</span>
         
         <form action="./templates/param.php" method="post">
 

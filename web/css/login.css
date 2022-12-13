@@ -1,8 +1,18 @@
 .one_box .bg1 {
     width: 100%; 
     min-height: 60vh;
-    background-image: url(/AssuerPlus/web/img/banniere.png);
+    background-image: url(../img/banniere.png);
     background-size: cover;
+}
+
+.error {
+    margin-top: 10px; 
+    width: 80%; 
+    display: block; 
+    padding: 10px; 
+    border-radius: 8px; 
+    background-color: #df3b3b; 
+    color: #FFF;
 }
 
 .login {
@@ -24,6 +34,7 @@
             height: 60px; 
             color: #FFF; 
             border-radius: 10px 10px 0px 0px;
+            overflow: hidden;
         }
 
         .login-form form {
@@ -76,7 +87,7 @@
     .one_box .bg1 {
         width: 100%; 
         min-height: 35vh;
-        background-image: url(/AssuerPlus/web/img/banniere.png);
+        background-image: url(../img/banniere.png);
         background-size: cover;
     }
 

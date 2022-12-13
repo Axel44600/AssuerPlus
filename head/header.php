@@ -14,7 +14,7 @@
         </div>
                 
         <ul class="menu-items">
-            <li style="border: none;"><a onclick="myFunction()" href="#about">Le groupe <?php echo($sitename); ?></a></li>
+            <li style="border: none;"><a onclick="closeHamburgerMenu()" href="#about">Le groupe <?php echo($sitename); ?></a></li>
             <li><a onclick="myFunction()" href="#map">Nos agences</a></li>
             <li><a onclick="myFunction()" href="#help">Assistance</a></li>
             <li><a onclick="myFunction()" href="./home.php">Mon espace personnel</a></li>

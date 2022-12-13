@@ -17,9 +17,7 @@ require('./settings/config.php');
 </head>
 <body>
 
-
 <?php require('./head/header.php') ?>
-
 
 <section class="one_box">
     <div class="bg"></div>
@@ -45,8 +43,7 @@ require('./settings/config.php');
 
 <section class="two_box" id="about">
     <h1><?php echo($sitename); ?>, votre complice de vies</h1>
-    <hr>
-    <br>
+    <hr><br>
     <span>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem quis veniam qui soluta voluptatibus porro ad nostrum maxime eius, in, cupiditate nesciunt vel. Illum qui recusandae sequi, consequuntur quis hic voluptatum omnis saepe aliquid optio accusantium possimus cum veniam porro nostrum quia adipisci neque odit temporibus vitae ut deserunt a ipsam? Quo ut nisi, aliquam ad amet culpa molestiae voluptatibus numquam adipisci libero saepe, repudiandae ab! Molestiae neque eligendi dicta nemo. Nisi maiores eveniet neque enim vel esse asperiores nihil perspiciatis quia! Numquam quibusdam laudantium repudiandae blanditiis deleniti ipsum cum illo omnis ullam, praesentium quia, recusandae, doloribus molestiae officiis. Soluta corrupti, voluptas provident alias sint aut numquam nihil praesentium quisquam ducimus voluptatem autem veritatis commodi rerum, repudiandae excepturi possimus. Fugit, ducimus dolorum! Aliquam doloribus placeat aperiam atque minima, quis similique voluptates necessitatibus excepturi, incidunt ipsam, consectetur dolores sequi commodi asperiores eveniet nostrum. Quod nisi repudiandae officiis vel quae eaque incidunt doloribus iusto, sed corrupti neque quis ipsam sint. Dolore et perspiciatis fugiat quam accusamus velit eum. Officiis deleniti porro vel autem officia sit dolores odio maiores reiciendis provident perferendis maxime earum reprehenderit dolorum facilis, id nisi explicabo inventore debitis magnam laboriosam hic? Optio eveniet, iusto rerum quidem laudantium repellendus quis.</p>
     </span>   
@@ -59,23 +56,22 @@ require('./settings/config.php');
         <div class="map"></div>
 </section>
 
-<section class="two_box" id="help" style="display: flex; flex-wrap: wrap;">
+<section class="two_box" id="help">
     <div class="help">
             <div class="help-contact">
                 <h1>Assistance</h1>
                 <hr>
                 <br>
-                <span style="text-align: center;">
+                <span>
                     <b>Une urgence ? Assistance 24 h/24, 7 j/7 </b>
                 <br><br>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae rem consequuntur, magni quos possimus aspernatur esse quidem odit hic, adipisci tempora ipsam. Vero repellat eveniet dicta tempore, recusandae nesciunt a ut minus beatae, assumenda nisi autem? Consectetur non nemo unde alias quae rerum quis minima ipsum molestias quaerat, ratione recusandae vitae illo dicta inventore labore atque? Facilis reiciendis corporis nobis eligendi possimus ducimus autem aliquam consequuntur tenetur! Ipsam sequi quas doloremque, blanditiis quisquam delectus repudiandae sed id, tempore inventore ab similique modi doloribus? Provident ipsa totam, pariatur vel nisi cum autem, laboriosam est, nam quasi voluptate corporis vitae velit odio?</p>
-                </span>
-                
-              
+                </span> 
             </div>
+
             <div class="pictures">
-                <div style="background-image: url(./web/img/first-contact-picture.png); margin-bottom: 20px; border-radius: 10px 10px 0px 0px; width: 80%; height: 200px;"></div>
-                <div style="background-image: url(./web/img/second-contact-picture.png); border-radius: 0px 0px 10px 10px; background-size: cover; width: 80%; height: 200px;"></div>
+                <div class="first"></div>
+                <div class="second"></div>
             </div>
     </div>
     

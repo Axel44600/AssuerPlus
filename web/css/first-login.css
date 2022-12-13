@@ -1,15 +1,31 @@
 .one_box .bg1 {
     width: 100%; 
     min-height: 60vh;
-    background-image: url(/AssuerPlus/web/img/banniere.png);
+    background-image: url(../img/banniere.png);
     background-size: cover;
     padding-top: 20px;
+}
+
+.error {
+    margin-top: 10px; 
+    width: 80%; 
+    display: block; 
+    padding: 10px; 
+    border-radius: 8px; 
+    background-color: #df3b3b; 
+    color: #FFF;
 }
 
 .forgot-pass {
     width: 100%; 
     padding-top: 80px;
+    padding-bottom: 60px;
 }
+
+    .second-contain {
+        display: none;
+    }
+
     .pass {
         background-color: #FFF; 
         width: 500px; 
@@ -45,6 +61,12 @@
             width: 45%; 
             text-align: center; 
             border-radius: 4px;
+        }
+
+        .pass a#no {
+            background-color: #fff; 
+            color: #1E1E1E; 
+            border: 1px solid #1E1E1E;
         }
 
         .pass input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
@@ -99,7 +121,7 @@
     .one_box .bg1 {
         width: 100%; 
         min-height: 35vh;
-        background-image: url(/AssuerPlus/web/img/banniere.png);
+        background-image: url(../img/banniere.png);
         background-size: cover;
     }
 
