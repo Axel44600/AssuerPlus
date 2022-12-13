@@ -59,7 +59,7 @@ header.head {
 @media only screen and (max-width: 375px) {
     header.head {
         background-color : #5e992b;
-        min-height: 260px;
+       /* min-height: 260px; */
     }
 
     .head .head-left .logo {
@@ -83,7 +83,7 @@ header.head {
 @media only screen and (min-width: 376px) and (max-width: 425px) {
     header.head {
         background-color : #5e992b;
-        min-height: 260px;
+       /* min-height: 260px; */
     }
 
     .head .head-left .logo {
@@ -108,7 +108,7 @@ header.head {
 @media only screen and (max-width: 1300px) {
 
     header.head {
-      min-height: 260px;
+     /* min-height: 260px; */
     }
 
     .head .head-right li {
