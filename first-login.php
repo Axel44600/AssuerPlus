@@ -1,135 +1,12 @@
 <?php 
-require './settings/config.php';
-session_start();
-
-if (isset($_SESSION['id'])) {
-    header('Location: home.php');
-    exit;
-}
-
-const MIN_NAME_LEN = 3;
-const MAX_NAME_LEN = 10;
-const MIN_PASSWORD_LEN = 8;
-const TEL_LEN = 10;
-
-$errors = [];
-mb_internal_encoding('UTF-8');
-if ('POST' == $_SERVER['REQUEST_METHOD']) {
-
-
-    // NUM CLIENT
-
-    $numClient = (rand(1, 10000) * rand(1, 10000));
-    $stmt = $bdd->prepare('SELECT 1 FROM clients WHERE numClient = :numClient');
-    if (FALSE !== $stmt->fetchColumn()) {
-        $numClient = (rand(1, 10000) * rand(1, 10000) +1);
-    }
-
-    // MAIL
-
-    if (array_key_exists('email', $_POST)) {
-        $domain = substr(strrchr($_POST['email'], '@'), 1);
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = "L'adresse email est invalide";
-        } else if (in_array($domain, BLACKLIST_EMAIL_PROVIDERS)) {
-            $errors['email'] = sprintf("Les adresses email provenant de '%s' ne sont pas acceptées", htmlspecialchars($domain));
-        } else {
-            $stmt = $bdd->prepare('SELECT 1 FROM clients WHERE email = :email');
-            $stmt->execute(['email' => $_POST['email']]);
-            if (FALSE !== $stmt->fetchColumn()) {
-                $errors['email'] = "Cette adresse email est déjà utilisée";
-            }
-        }
-    } else {
-        $errors['email'] = "Veuillez saisir votre adresse email.";
-    }
-
-    // NOM
-
-    if (array_key_exists('nom', $_POST)) {
-        $nom_length = mb_strlen($_POST['nom']);
-        if ($nom_length < MIN_NAME_LEN || $nom_length > MAX_NAME_LEN) {
-            $errors['nom'] = sprintf("Veuillez saisir votre vrai nom.");
-        }
-    } else {
-        $errors['nom'] = "Veuillez saisir votre nom.";
-    }
-
-    // PRENOM
-
-    if (array_key_exists('prenom', $_POST)) {
-        $prenom_length = mb_strlen($_POST['prenom']);
-        if ($prenom_length < MIN_NAME_LEN || $prenom_length > MAX_NAME_LEN) {
-            $errors['prenom'] = sprintf("Veuillez saisir votre vrai prénom.");
-        } 
-    } else {
-        $errors['prenom'] = "Veuillez saisir votre prénom.";
-    }
-
-    // TEL
-
-    if (array_key_exists('tel', $_POST)) {
-        $tel_length = mb_strlen($_POST['tel']);
-        if ($tel_length < TEL_LEN || $tel_length > TEL_LEN) {
-            $errors['tel'] = sprintf("Numéro de téléphone incorrect.");
-        } else if(!preg_match("#[0][6-7][- \.?]?([0-9][0-9][- \.?]?){4}$#", $_POST['tel'])){
-            $errors['tel'] = sprintf("Numéro de téléphone incorrect.");
-        } else {
-            $stmt = $bdd->prepare('SELECT 1 FROM clients WHERE tel = :tel');
-            $stmt->execute(['tel' => $_POST['tel']]);
-            if (FALSE !== $stmt->fetchColumn()) {
-                $errors['tel'] = "Ce numéro de téléphone est déjà utilisé.";
-            }
-        }
-    } else {
-        $errors['tel'] = "Veuillez saisir votre numéro de téléphone.";
-    }
-    
-
-    // MOT DE PASSE
-
-    if (array_key_exists('pass', $_POST)) {
-        $mdp_length = mb_strlen($_POST['pass']);
-        if ($mdp_length < MIN_PASSWORD_LEN) {
-            $errors['pass'] = sprintf("La longueur du mot de passe doit être d'au moins %d caractères", MIN_PASSWORD_LEN);
-        }
-        if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $_POST['pass'])) {
-            $errors['pass'] = "Votre mot de passe doit contenir une majuscule et un caractère spécial.";
-        }
-        if ($_POST['pass'] != $_POST['repass']) {
-            $errors['repass'] = "Le mot de passe et sa confirmation ne coïncident pas.";
-        }
-    } else {
-        $errors['pass'] = "Veuillez saisir votre mot de passe.";
-    }
-
-    if (!$errors) {
-        $insert = $bdd->prepare('
-                INSERT INTO clients(numClient, email, nom, prenom, password, ip, tel, bonus, malus, rang)
-                VALUES(:numClient, :email, :nom, :prenom, :pass, :ip, :tel, :bonus, :malus, :rang)');
-        $insert->execute([
-            'numClient' => $numClient,
-            'email' => $_POST['email'],
-            'nom' => $_POST['nom'],
-            'prenom' => $_POST['prenom'],
-            'pass' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
-            'ip' => getIp(),
-            'tel' => $_POST['tel'],
-            'bonus' => 100,
-            'malus' => 0,
-            'rang' => 0,
-        ]);
-
-        echo"<script>alert('Inscription réussie ! Vous pouvez désormais vous connecter sur votre espace personnel');</script>";
-        header( "refresh:0;url=./login.php");
-        exit;
-    }
-}
+require './back/settings/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./web/img/favicon_car.png"/>
@@ -141,6 +18,8 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     <title>Première connexion - <?php echo($sitename); ?></title>
     <script src="./web/js/header.js"></script>
     <script src="./web/js/login.js"></script>
+    <script src="./web/js/form/firstLoginForm.js"></script>
+
 </head>
 <body>
 
@@ -148,17 +27,11 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
 
 <section class="one_box">
 <div class="bg1">
+    
+<div class="error">
+    <p></p>
+</div>
 
-    <?php if ($errors): ?>
-    <div class="error">
-    <p>Veuillez corriger les erreurs ci-dessous afin de réaliser votre inscription :</p><br>
-    <ul>
-    <?php foreach ($errors as $e): ?>
-    <li style="text-align: left;"><?= $e ?></li>
-    <?php endforeach ?>
-    </ul>
-    </div>
-    <?php endif ?>
 
     <div class="forgot-pass">
         <div class="pass">
@@ -172,16 +45,16 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
             <div class="first-contain">
                 
                     <label for="numS">Votre numéro de souscripteur</label><br>
-                    <input type="text" name="nOrMail" id="numS" required><br>
+                    <input type="text" name="null" id="null" required><br>
                     <label for="mail">Votre email</label><br>
-                    <input type="email" id="mail" name="mail" required><br>
+                    <input type="email" id="nullS" name="null" required><br>
                     <input type="submit" style="opacity: 0.7;" value="Indisponible..." disabled> 
             
             </div>
 
 
             <div class="second-contain">
-                <form action="" method="post">
+                <form id="inscription" action="./back/firstLoginForm.php" method="post">
                     <label for="mail">Votre email</label><br>
                     <input type="email" name="email" id="mail" required><br>
                     <label for="first-name">Nom</label>
@@ -199,7 +72,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
                     <label for="phoneNumber">Votre numéro de téléphone</label>
                     <input type="tel" id="phoneNumber" name="tel" minlength="<?php echo(TEL_LEN); ?>" maxlength="<?php echo(TEL_LEN); ?>" required>
 
-                    <input type="submit" value="Terminer">
+                    <input type="submit" id="submit" value="Terminer">
                 </form>
             </div>
         </div>

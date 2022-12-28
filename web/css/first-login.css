@@ -9,7 +9,7 @@
 .error {
     margin-top: 10px; 
     width: 80%; 
-    display: block; 
+    display: none; 
     padding: 10px; 
     border-radius: 8px; 
     background-color: #df3b3b; 
@@ -108,6 +108,7 @@
         }
 
     .error {
+        display: none;
         width: 550px; 
         text-align: center; 
         padding: 10px; 
@@ -142,6 +143,7 @@
         }
 
     .error {
+        display: none;
         width: 90%; 
         text-align: center; 
         font-size: 14px;

@@ -1,38 +1,12 @@
 <?php 
-require('./settings/config.php');
-
-session_start();
-
-$fail = FALSE;
-if ('POST' == $_SERVER['REQUEST_METHOD']) {
-    $stmt = $bdd->prepare('SELECT * FROM clients WHERE email = :numOrEmail OR numClient = :numOrEmail');
-    $stmt->execute(['numOrEmail' => $_POST['numOrEmail']]);
-
-    if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        if (password_verify($_POST['pass'], $row['password'])) {
-            $_SESSION['id'] = $row['id'];
-            if (password_needs_rehash($row['pass'], $password_options['algo'], $password_options['options'])) {
-                $stmt = $bdd->prepare('UPDATE clients SET password = :new_hash, ip = :ip WHERE id = :id');
-                $stmt->execute([
-                    'id' => $row['id'],
-                    'ip' => getIp(),
-                    'new_hash' => password_hash($_POST['pass'], $password_options['algo'], $password_options['options']),
-                ]);
-            }
-            header('Location: home.php');
-            exit;
-        } else {
-            $fail = TRUE;
-        }
-    } else {
-        $fail = TRUE;
-    }
-}
+require './back/settings/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./web/img/favicon_car.png"/>
@@ -43,6 +17,7 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
     <link rel="stylesheet" href="./web/css/header.css">
     <title>Connexion - <?php echo($sitename); ?></title>
     <script src="./web/js/header.js"></script>
+    <script src="./web/js/form/loginForm.js"></script>
 </head>
 <body>
 
@@ -54,18 +29,18 @@ if ('POST' == $_SERVER['REQUEST_METHOD']) {
         <div class="login-form">
             <h1>Accéder à mon espace personnel</h1>
 
-<?php if ($fail): ?>
 <p class="error">N° de souscripteur / email ou mot de passe incorrect.</p>
-<?php endif ?>
 
-            <form action="" method="post">
+
+            <form id="connexion" action="./back/loginForm.php" method="post">
                 <label for="mail">N° de souscripteur / email</label><br>
-                <input type="text" placeholder="ex: 56444392829..." name="numOrEmail" id="mail" minlength="3" pattern="[A-Za-z-@-.--]" required><br>
+                <input type="text" placeholder="ex: 56444392829..." name="numOrEmail" id="mail" minlength="3" required><br>
                 <label for="password">Mot de passe</label><br>
                 <input type="password" placeholder="*********" type="password" id="password" name="pass" required><br>
                 <small><a href="./first-login.php">1ère connexion / Mot de passe oublié ?</a></small>
-                <input type="submit" value="Se connecter">
+                <input type="submit" id="submit" value="Se connecter">
             </form>
+
         </div>
     </div>
     </div>

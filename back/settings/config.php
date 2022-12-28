@@ -11,14 +11,8 @@ $password_options = [
 $bdd = new PDO('mysql:host=localhost;dbname=assuerplus;charset=utf8', 'root', '');
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
 // Configuration du site
 $sitename = "AssuerPlus";
-
-const BLACKLIST_EMAIL_PROVIDERS = [
-    'yopmail.com',
-    # ...
-];
 
 // Fonctions
 function getIp() {

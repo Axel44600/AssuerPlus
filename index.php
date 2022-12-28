@@ -1,5 +1,5 @@
 <?php 
-require('./settings/config.php');
+require('./back/settings/config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
