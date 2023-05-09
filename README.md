@@ -1,5 +1,5 @@
 # AssuerPlus
-Application web d'assurance automobile </br>
+Application web responsive d'assurance automobile </br>
 Technologies et langages utilisés : PHP/PDO | Javascript | JQuery
 <br>
 
